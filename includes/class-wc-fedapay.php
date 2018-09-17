@@ -23,9 +23,8 @@ function init_fedapay_gateway_class() {
       * *Singleton* via the `new` operator from outside of this class.
       */
       public function __construct() {
-        $plugin_dir = plugin_dir_url(__FILE__);
         $this->id = 'woo_gateway_fedapay';
-        $this->icon = apply_filters( 'woocommerce_gateway_icon', $plugin_dir.'../assets/img/fedapay.png' );
+        $this->icon = plugins_url( '../assets/img/fedapay.png' , __FILE__ ) ;
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Gateway Fedapay';
         $this->order_button_text = __( 'Continue to payment', 'woocommerce' );
@@ -190,3 +189,10 @@ function add_fedapay_gateway_class( $gateways ) {
 
 add_filter( 'woocommerce_payment_gateways', 'add_fedapay_gateway_class' );
 
+function fedapay_woocommerce_addon_activate() {
+	if(!function_exists('curl_exec'))
+	{
+		 wp_die( '<pre>This plugin requires PHP CURL library installled in order to be activated </pre>' );
+	}
+}
+register_activation_hook( __FILE__, 'fedapay_woocommerce_addon_activate' );
