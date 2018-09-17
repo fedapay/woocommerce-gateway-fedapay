@@ -37,16 +37,16 @@ return array(
   ),
   'fedapay_testsecretkey' => array(
 		  'title' => __( 'Test Secret Key', 'woocommerce' ),
-		  'type' => 'text',
-		  'description' => __( 'This is the Secret Key found in API Keys in Account Dashboard.', 'woocommerce' ),
+		  'type' => 'password',
+		  'description' => __( 'This is the Test Secret Key found in API Keys in Account Dashboard.', 'woocommerce' ),
 		  'default' => '',
 		  'desc_tip'      => true,
 		  'placeholder' => 'Fedapay Test Secret Key'
 		  ),
 		'fedapay_livesecretkey' => array(
 		  'title' => __( 'Live Secret Key', 'woocommerce' ),
-		  'type' => 'text',
-		  'description' => __( 'This is the Secret Key found in API Keys in Account Dashboard.', 'woocommerce' ),
+		  'type' => 'password',
+		  'description' => __( 'This is the Live Secret Key found in API Keys in Account Dashboard.', 'woocommerce' ),
 		  'default' => '',
 		  'desc_tip'      => true,
 		  'placeholder' => 'Fedapay Live Secret Key'

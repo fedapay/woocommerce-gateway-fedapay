@@ -16,7 +16,6 @@
  * Domain Path:     /languages
  * Version:         0.1.0
  *
- * @package         Woocommerce_Gateway_Fedapay
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

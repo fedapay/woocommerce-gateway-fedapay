@@ -28,7 +28,7 @@ function init_fedapay_gateway_class() {
         $this->icon = apply_filters( 'woocommerce_gateway_icon', $plugin_dir.'../assets/img/fedapay.png' );
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Gateway Fedapay';
-        $this->order_button_text = __( 'Payer avec Fedapay', 'woocommerce' );
+        $this->order_button_text = __( 'Continue to payment', 'woocommerce' );
         $this->method_description = 'Woocommerce Fedapay Payment Gateway Plug-in for WooCommerce';
 
         $this->supports = ['products'];
