@@ -3,17 +3,17 @@
 namespace FedaPay;
 
 /**
- * Class ApiKey
+ * Class PhoneNumber
  *
  * @property int $id
- * @property string $public_key
- * @property string $private_key
+ * @property string $number
+ * @property string $country
  * @property string $created_at
  * @property string $updated_at
  *
  * @package FedaPay
  */
-class ApiKey extends Resource
+class PhoneNumber extends Resource
 {
 
 }

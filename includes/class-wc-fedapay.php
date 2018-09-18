@@ -74,9 +74,10 @@ function init_fedapay_gateway_class() {
 
       private function get_fedapay_sdk() {
         if ( ! class_exists( 'Fedapay\Fedapay' ) ) {
+          	// include(plugin_dir_path( __FILE__ )."lib/Stripe.php");
           require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/fedapay-php/init.php';
         }
-        require(  plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/fedapay-php/vendor/autoload.php');
+        // require(  plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/fedapay-php/vendor/autoload.php');
       }
       /**
        * Initialise Gateway Settings Form Fields.

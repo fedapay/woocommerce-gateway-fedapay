@@ -2,10 +2,6 @@
 
 namespace FedaPay;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
-
 /**
 * Class Requestor
 *
@@ -70,17 +66,17 @@ class Requestor
     }
 
     /**
-    * @param GuzzleHttp\ClientInterface $client The requestor http client.
-    * @return void
-    */
+     * @static
+     *
+     * @param HttpClient\ClientInterface $client
+     */
     public static function setHttpClient($client)
     {
         self::$httpClient = $client;
     }
 
     /**
-     * The http client
-     * @return GuzzleHttp\ClientInterface
+     * @return HttpClient\ClientInterface
      */
     private function httpClient()
     {
@@ -91,7 +87,7 @@ class Requestor
                 $options['verify'] = FedaPay::getCaBundlePath();
             }
 
-            self::$httpClient = new \GuzzleHttp\Client($options);
+            self::$httpClient = HttpClient\CurlClient::instance();
         }
 
         return self::$httpClient;
@@ -105,38 +101,24 @@ class Requestor
     *
     * @return array An API response.
     */
-    public function request($method, $path, $params = [], $headers = [])
+    public function request($method, $path, $params = null, $headers = null)
     {
-        try {
-            if (is_null($headers)) {
-                $headers = [];
-            }
+        $params = $params ?: [];
+        $headers = $headers ?: [];
 
-            if (is_null($params)) {
-                $params = [];
-            }
+        $headers = array_merge($headers, $this->defaultHeaders());
+        $url = $this->url($path);
+        $rawHeaders = [];
 
-            $headers = array_merge($headers, $this->defaultHeaders());
-            $url = $this->url($path);
-            $method = strtoupper($method);
-            $options = [ 'headers' => $headers ];
-
-            switch ($method) {
-                case 'GET':
-                case 'HEAD':
-                case 'DELETE':
-                    $options['query'] = $params;
-                    break;
-                default:
-                    $options['json'] = $params;
-                    break;
-            }
-            $response = $this->httpClient()->request($method, $url, $options);
-
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (RequestException $e) {
-            $this->handleRequestException($e);
+        foreach ($headers as $header => $value) {
+            $rawHeaders[] = $header . ': ' . $value;
         }
+
+        list($rbody, $rcode, $rheaders) = $this->httpClient()->request($method, $url, $params, $rawHeaders);
+
+        $json = $this->_interpretResponse($rbody, $rcode, $rheaders);
+
+        return $json;
     }
 
     /**
@@ -208,5 +190,35 @@ class Requestor
     protected function url($path)
     {
         return $this->baseUrl() . '/' . $this->apiVersion . $path;
+    }
+
+    /**
+     * @param string $rbody
+     * @param int    $rcode
+     * @param array  $rheaders
+     *
+     * @return mixed
+     */
+    private function _interpretResponse($rbody, $rcode, $rheaders)
+    {
+        try {
+            $resp = json_decode($rbody, true);
+        } catch (Exception $e) {
+            $msg = "Invalid response body from API: $rbody "
+              . "(HTTP response code was $rcode)";
+            throw new Error\ApiConnection($msg, $rcode, $rbody);
+        }
+
+        if ($rcode < 200 || $rcode >= 300) {
+            throw new Error\ApiConnection(
+                'ApiConnection Error',
+                $rcode,
+                $rbody,
+                $resp,
+                $rheaders
+            );
+        }
+
+        return $resp;
     }
 }

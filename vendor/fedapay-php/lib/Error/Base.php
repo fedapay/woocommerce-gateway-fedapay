@@ -2,8 +2,6 @@
 
 namespace FedaPay\Error;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Exception;
 
 /**
@@ -19,14 +17,14 @@ class Base extends Exception
     private $httpStatus;
 
     /**
-     * @var RequestInterface
+     * @var string
      */
-    private $httpRequest;
+    private $httpBody;
 
     /**
-     * @var ResponseInterface
+     * @var json
      */
-    private $httpResponse;
+    private $jsonBody;
 
     /**
      * @var string
@@ -41,16 +39,19 @@ class Base extends Exception
     public function __construct(
         $message,
         $httpStatus = null,
-        $httpRequest = null,
-        $httpResponse = null
+        $httpBody = null,
+        $jsonBody = null,
+        $httpHeaders = null
     ) {
         parent::__construct($message);
 
         $this->httpStatus = $httpStatus;
-        $this->httpRequest = $httpRequest;
-        $this->httpResponse = $httpResponse;
+        $this->httpBody = $httpBody;
+        $this->jsonBody = $jsonBody;
+        $this->httpHeaders = $httpHeaders;
 
-        $this->fetchErrors();
+        $this->errorMessage = isset($jsonBody["message"]) ? $jsonBody["message"]: null;
+        $this->errors = isset($jsonBody["errors"]) ? $jsonBody["errors"]: null;
     }
 
     public function getHttpStatus()
@@ -58,14 +59,19 @@ class Base extends Exception
         return $this->httpStatus;
     }
 
-    public function getHttpRequest()
+    public function getHttpBody()
     {
-        return $this->httpRequest;
+        return $this->httpBody;
     }
 
-    public function getHttpResponse()
+    public function getJsonBody()
     {
-        return $this->httpResponse;
+        return $this->jsonBody;
+    }
+
+    public function getHttpHeaders()
+    {
+        return $this->httpHeaders;
     }
 
     public function getErrorMessage()
@@ -81,21 +87,5 @@ class Base extends Exception
     public function hasErrors()
     {
         return !empty($this->errors);
-    }
-
-    private function fetchErrors()
-    {
-        if ($this->httpResponse) {
-            $body = $this->httpResponse->getBody()->getContents();
-            $json = json_decode($body, true);
-
-            if ($json && isset($json['message'])) {
-                $this->errorMessage = $json['message'];
-            }
-
-            if ($json && isset($json['errors'])) {
-                $this->errors = $json['errors'];
-            }
-        }
     }
 }

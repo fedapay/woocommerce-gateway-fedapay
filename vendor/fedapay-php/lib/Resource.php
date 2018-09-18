@@ -96,17 +96,31 @@ abstract class Resource extends FedaPayObject
         return static::resourcePath($this['id']);
     }
 
+    /**
+     * Validate request params
+     * @param array $params
+     * @throws Error\InvalidRequest
+     */
     protected static function _validateParams($params = null)
     {
         if ($params && !is_array($params)) {
-            $message = "You must pass an array as the first argument to FedaPay API "
-               . "method calls.  (HINT: an example call to create a customer "
+            $message = 'You must pass an array as the first argument to FedaPay API '
+               . 'method calls.  (HINT: an example call to create a customer '
                . "would be: \"FedaPay\\Customer::create(array('firstname' => toto, "
                . "'lastname' => 'zoro', 'email' => 'admin@gmail.com', 'phone' => '66666666'))\")";
             throw new Error\InvalidRequest($message);
         }
     }
 
+    /**
+     * Static method to send request
+     * @param string $method
+     * @param string $url
+     * @param array $params
+     * @param array $headers
+     *
+     * @return array
+     */
     protected static function _staticRequest($method, $url, $params = [], $headers = [])
     {
         $requestor = self::getRequestor();
@@ -120,6 +134,11 @@ abstract class Resource extends FedaPayObject
         return [$response, $options];
     }
 
+    /**
+     * Static method to retrive a resource
+     * @param mixed $id
+     * @return FedaPay\FedaPayObject
+     */
     protected static function _retrieve($id)
     {
         $url = static::resourcePath($id);
@@ -131,6 +150,13 @@ abstract class Resource extends FedaPayObject
         return $object->$className;
     }
 
+    /**
+     * Static method to retrive a list of resources
+     * @param array $params
+     * @param array $headers
+     *
+     * @return array FedaPay\FedaPayObject
+     */
     protected static function _all($params = [], $headers = [])
     {
         self::_validateParams($params);
@@ -140,6 +166,13 @@ abstract class Resource extends FedaPayObject
         return Util::arrayToFedaPayObject($response, $opts);
     }
 
+    /**
+     * Static method to create a resources
+     * @param array $params
+     * @param array $headers
+     *
+     * @return Resource
+     */
     protected static function _create($params = [], $headers = [])
     {
         self::_validateParams($params);
@@ -147,12 +180,14 @@ abstract class Resource extends FedaPayObject
         $className = static::className();
 
         list($response, $opts) = static::_staticRequest('post', $url, $params, $headers);
+
         $object = Util::arrayToFedaPayObject($response, $opts);
 
         return $object->$className;
     }
 
     /**
+     * Static method to update a resource
      * @param string $id     The ID of the API resource to update.
      * @param array $params The request params
      * @param array $headers the request headers
@@ -184,13 +219,20 @@ abstract class Resource extends FedaPayObject
         return $this;
     }
 
+    /**
+     * Update the resource
+     * @param array $headers the request headers
+     *
+     * @return Resource the updated API resource
+     */
     protected function _save($headers = [])
     {
         $params = $this->serializeParameters();
         $className = static::className();
         $url = $this->instanceUrl();
 
-        list($response, $opts) = static::_staticRequest('PUT', $url, $params, $headers);
+        list($response, $opts) = static::_staticRequest('put', $url, $params, $headers);
+
         $klass = $opts['apiVersion'] . '/' . $className;
 
         $json = $response[$klass];

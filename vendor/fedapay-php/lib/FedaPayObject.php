@@ -128,12 +128,14 @@ class FedaPayObject implements \ArrayAccess, \JsonSerializable
 
     public function refreshFrom($values, $opts)
     {
-        foreach ($values as $k => $value) {
-            if (is_array($value)) {
-                $k = Util::stripApiVersion($k, $opts);
-                $this->_values[$k] = Util::arrayToFedaPayObject($value, $opts);
-            } else {
-                $this->_values[$k] = $value;
+        if (!is_null($values)) {
+            foreach ($values as $k => $value) {
+                if (is_array($value)) {
+                    $k = Util::stripApiVersion($k, $opts);
+                    $this->_values[$k] = Util::arrayToFedaPayObject($value, $opts);
+                } else {
+                    $this->_values[$k] = $value;
+                }
             }
         }
     }
