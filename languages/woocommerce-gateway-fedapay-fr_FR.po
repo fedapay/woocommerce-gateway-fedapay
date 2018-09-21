@@ -1,0 +1,146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"POT-Creation-Date: 2018-09-21 11:47+0100\n"
+"PO-Revision-Date: 2018-09-21 11:50+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: includes/class-wc-fedapay.php:30
+msgid "Continue to payment"
+msgstr "Procéder au paiement"
+
+#: includes/class-wc-fedapay.php:31
+msgid "Fedapay Payment Gateway Plug-in for WooCommerce"
+msgstr "Fedapay Payment Gateway Plug-in pour Woocommerce"
+
+#: includes/class-wc-fedapay.php:131 includes/class-wc-fedapay.php:179
+msgid "Payment error: "
+msgstr "Erreur de paiement "
+
+#: includes/class-wc-fedapay.php:140
+#, php-format
+msgid ""
+"<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL "
+"certificate on your checkout page. Please ensure that you have a valid SSL "
+"certificate and that you are <a href=\"%s\">forcing the checkout pages to be "
+"secured.</a>"
+msgstr ""
+"<strong>%s</strong> est activé et WooCommerce ne force pas le certificat SSL "
+"sur votre page de paiement. Assurez-vous que vous disposez d'un certificat "
+"SSL valide et que vous <a href=\"%s\"> forcez les pages de paiement à être "
+"sécurisées.</a>"
+
+#: includes/class-wc-fedapay.php:158
+msgid "Transaction completed successfully"
+msgstr "Transaction effectuée avec succès"
+
+#: includes/class-wc-fedapay.php:159
+msgid "Hey, the order has been completed. Thanks!"
+msgstr "La transaction a été effectuée: Merci!"
+
+#: includes/class-wc-fedapay.php:165
+msgid "Hey, the order has been cancelled. Try again!"
+msgstr "La transaction a été annulée: Veuillez réessayer!"
+
+#: includes/class-wc-fedapay.php:166
+msgid "Transaction has been cancelled: Try again!"
+msgstr "La transaction a été annulée: Veuillez réessayer!"
+
+#: includes/class-wc-fedapay.php:172
+msgid "Hey, the order has been declined. Try again!"
+msgstr "La transaction a été refusée: Veuillez réessayer!"
+
+#: includes/class-wc-fedapay.php:173
+msgid "Transaction has been declined: Try again!"
+msgstr "La transaction a été refusée: Veuillez réessayer!"
+
+#: includes/settings-fedapay.php:11
+msgid "Enable/Disable"
+msgstr "Activer/Désactiver"
+
+#: includes/settings-fedapay.php:13
+msgid "Enable Fedapay"
+msgstr "Activer Fedapay"
+
+#: includes/settings-fedapay.php:17
+msgid "Title"
+msgstr "Titre"
+
+#: includes/settings-fedapay.php:19
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+"Cela détermine le titre que les utilisateurs verront durant le paiement."
+
+#: includes/settings-fedapay.php:20
+msgid "Fedapay"
+msgstr "Fedapay"
+
+#: includes/settings-fedapay.php:24
+msgid "Description"
+msgstr "Description"
+
+#: includes/settings-fedapay.php:27
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+"Cela détermine la description que les utilisateurs verront durant le "
+"paiement."
+
+#: includes/settings-fedapay.php:28
+msgid "Pay via Fedapay; you can pay with your credit card or MTN Mobile Money"
+msgstr ""
+"Payez via Fedapay; vous pouvez payer avec votre carte de crédit ou avec MTN "
+"Mobile Money"
+
+#: includes/settings-fedapay.php:31
+msgid "Fedapay sandbox"
+msgstr "Fedapay sandbox"
+
+#: includes/settings-fedapay.php:33
+msgid "Enable Fedapay sandbox"
+msgstr "Activer Fedapay sandbox"
+
+#: includes/settings-fedapay.php:36
+#, php-format
+msgid ""
+"Fedapay sandbox can be used to test payments. Sign up for a <a href=\"%s"
+"\">developer account</a>."
+msgstr ""
+"Fedapay sandbox peut être utilisé pour tester les paiements. Inscrivez-vous "
+"pour un < a href = \" %s\" > compte développeur</a>."
+
+#: includes/settings-fedapay.php:39
+msgid "Test Secret Key"
+msgstr "Clé secrète de Test"
+
+#: includes/settings-fedapay.php:41
+msgid "This is the Test Secret Key found in API Keys in Account Dashboard."
+msgstr ""
+"Il s'agit de la clé secrète de test trouvée dans les clés API dans le "
+"tableau de bord du compte."
+
+#: includes/settings-fedapay.php:44
+msgid "Fedapay Test Secret Key"
+msgstr "Clé secrète de Test"
+
+#: includes/settings-fedapay.php:47
+msgid "Live Secret Key"
+msgstr "Clé secrète Live"
+
+#: includes/settings-fedapay.php:49
+msgid "This is the Live Secret Key found in API Keys in Account Dashboard."
+msgstr ""
+"Il s'agit de la clé secrète Live trouvée dans les clés API dans le tableau "
+"de bord du compte."
+
+#: includes/settings-fedapay.php:52
+msgid "Fedapay Live Secret Key"
+msgstr "Clé secrète Live"

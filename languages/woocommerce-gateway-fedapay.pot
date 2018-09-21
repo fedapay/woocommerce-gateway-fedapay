@@ -1,0 +1,213 @@
+# Blank WordPress Pot
+# Copyright 2014 ...
+# This file is distributed under the GNU General Public License v3 or later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"Woocommerce Gateway "
+"Fedapay v1.0.0\n"
+"POT-Creation-Date: "
+"2018-09-21 11:47+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Your "
+"Name <you@example.com>\n"
+"Language-Team: Fedapay "
+"Team "
+"<translations@fedapay."
+"com>\n"
+"Report-Msgid-Bugs-To: "
+"Translator Name "
+"<translations@example."
+"com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/"
+"plain; charset=UTF-8\n"
+"Content-Transfer-"
+"Encoding: 8bit\n"
+"Plural-Forms: "
+"nplurals=2; plural=n != "
+"1;\n"
+"X-Textdomain-Support: "
+"yesX-Generator: Poedit "
+"1.6.4\n"
+"X-Poedit-SourceCharset: "
+"UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;esc_html_e;"
+"esc_html_x:1,2c;"
+"esc_html__;esc_attr_e;"
+"esc_attr_x:1,2c;"
+"esc_attr__;_ex:1,2c;"
+"_nx:4c,1,2;"
+"_nx_noop:4c,1,2;_x:1,2c;"
+"_n:1,2;_n_noop:1,2;"
+"__ngettext:1,2;"
+"__ngettext_noop:1,2;_c,"
+"_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Language: en_US\n"
+"X-Generator: Poedit "
+"2.1.1\n"
+"X-Poedit-"
+"SearchPath-0: .\n"
+
+#: includes/class-wc-fedapay.php:30
+msgid "Continue to payment"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:31
+msgid ""
+"Fedapay Payment Gateway "
+"Plug-in for WooCommerce"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:131
+#: includes/class-wc-fedapay.php:179
+msgid "Payment error: "
+msgstr ""
+
+#: includes/class-wc-fedapay.php:140
+#, php-format
+msgid ""
+"<strong>%s</strong> is "
+"enabled and WooCommerce "
+"is not forcing the SSL "
+"certificate on your "
+"checkout page. Please "
+"ensure that you have a "
+"valid SSL certificate "
+"and that you are <a href="
+"\"%s\">forcing the "
+"checkout pages to be "
+"secured.</a>"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:158
+msgid ""
+"Transaction completed "
+"successfully"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:159
+msgid ""
+"Hey, the order has been "
+"completed. Thanks!"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:165
+msgid ""
+"Hey, the order has been "
+"cancelled. Try again!"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:166
+msgid ""
+"Transaction has been "
+"cancelled: Try again!"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:172
+msgid ""
+"Hey, the order has been "
+"declined. Try again!"
+msgstr ""
+
+#: includes/class-wc-fedapay.php:173
+msgid ""
+"Transaction has been "
+"declined: Try again!"
+msgstr ""
+
+#: includes/settings-fedapay.php:11
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/settings-fedapay.php:13
+msgid "Enable Fedapay"
+msgstr ""
+
+#: includes/settings-fedapay.php:17
+msgid "Title"
+msgstr ""
+
+#: includes/settings-fedapay.php:19
+msgid ""
+"This controls the title "
+"which the user sees "
+"during checkout."
+msgstr ""
+
+#: includes/settings-fedapay.php:20
+msgid "Fedapay"
+msgstr ""
+
+#: includes/settings-fedapay.php:24
+msgid "Description"
+msgstr ""
+
+#: includes/settings-fedapay.php:27
+msgid ""
+"This controls the "
+"description which the "
+"user sees during "
+"checkout."
+msgstr ""
+
+#: includes/settings-fedapay.php:28
+msgid ""
+"Pay via Fedapay; you can "
+"pay with your credit "
+"card or MTN Mobile Money"
+msgstr ""
+
+#: includes/settings-fedapay.php:31
+msgid "Fedapay sandbox"
+msgstr ""
+
+#: includes/settings-fedapay.php:33
+msgid ""
+"Enable Fedapay sandbox"
+msgstr ""
+
+#: includes/settings-fedapay.php:36
+#, php-format
+msgid ""
+"Fedapay sandbox can be "
+"used to test payments. "
+"Sign up for a <a href="
+"\"%s\">developer "
+"account</a>."
+msgstr ""
+
+#: includes/settings-fedapay.php:39
+msgid "Test Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:41
+msgid ""
+"This is the Test Secret "
+"Key found in API Keys in "
+"Account Dashboard."
+msgstr ""
+
+#: includes/settings-fedapay.php:44
+msgid ""
+"Fedapay Test Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:47
+msgid "Live Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:49
+msgid ""
+"This is the Live Secret "
+"Key found in API Keys in "
+"Account Dashboard."
+msgstr ""
+
+#: includes/settings-fedapay.php:52
+msgid ""
+"Fedapay Live Secret Key"
+msgstr ""

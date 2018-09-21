@@ -27,8 +27,8 @@ function init_fedapay_gateway_class() {
         $this->icon = plugins_url( '../assets/img/fedapay.png' , __FILE__ ) ;
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Gateway Fedapay';
-        $this->order_button_text = __( 'Continue to payment', 'woocommerce' );
-        $this->method_description = 'Woocommerce Fedapay Payment Gateway Plug-in for WooCommerce';
+        $this->order_button_text = __( 'Continue to payment', 'woocommerce-gateway-fedapay' );
+        $this->method_description = __('Fedapay Payment Gateway Plug-in for WooCommerce', 'woocommerce-gateway-fedapay');
 
         $this->supports = ['products'];
 
@@ -74,10 +74,8 @@ function init_fedapay_gateway_class() {
 
       private function get_fedapay_sdk() {
         if ( ! class_exists( 'Fedapay\Fedapay' ) ) {
-          	// include(plugin_dir_path( __FILE__ )."lib/Stripe.php");
           require_once plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/fedapay-php/init.php';
         }
-        // require(  plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/fedapay-php/vendor/autoload.php');
       }
       /**
        * Initialise Gateway Settings Form Fields.
@@ -126,7 +124,7 @@ function init_fedapay_gateway_class() {
             );
 
       } catch (\Exception $e) {
-          wc_add_notice( __('Payment error: '.$e->getMessage(), 'woocommerce'), 'error' );
+          wc_add_notice( __('Payment error: '.$e->getMessage(), 'woocommerce-gateway-fedapay'), 'error' );
           return;
      }
     }
@@ -135,7 +133,7 @@ function init_fedapay_gateway_class() {
       public function do_ssl_check() {
         if( $this->enabled == "yes" ) {
           if( get_option( 'woocommerce_force_ssl_checkout' ) == "no" ) {
-            echo "<div class=\"error\"><p>". sprintf( __( "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href=\"%s\">forcing the checkout pages to be secured.</a>" ), $this->method_title, admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ) ."</p></div>";
+            echo "<div class=\"error\"><p>". sprintf( __( '<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woocommerce-gateway-fedapay'), $this->method_title, admin_url( 'admin.php?page=wc-settings&tab=advanced' ) ) ."</p></div>";
           }
         }
       }
@@ -153,28 +151,28 @@ function init_fedapay_gateway_class() {
                 switch($transaction->status) {
                     case 'approved':
                       $order->update_status( 'completed' );
-                      wc_add_notice( __('Paiement bien effectué', 'woocommerce'), 'success' );
-                      $order->add_order_note( 'Hey, la commande a été payé. Merci!', true );
+                      wc_add_notice( __('Transaction completed successfully', 'woocommerce-gateway-fedapay'), 'success' );
+                      $order->add_order_note(__( 'Hey, the order has been completed. Thanks!', 'woocommerce-gateway-fedapay'), true );
                       $woocommerce->cart->empty_cart();
                       wp_redirect($this->get_return_url($order));
                      break;
                     case 'canceled':
                         $order->update_status( 'cancelled', 'Error:' );
-                        $order->add_order_note( 'Hey, la commande a été annulée. Veuillez réssayer!', true );
-                        wc_add_notice( __('Le paiement a été annulé:Veuillez réssayer!', 'woocommerce'), 'error' );
+                        $order->add_order_note(__('Hey, the order has been cancelled. Try again!', 'woocommerce-gateway-fedapay'), true );
+                        wc_add_notice( __('Transaction has been cancelled: Try again!', 'woocommerce-gateway-fedapay'), 'error' );
                         $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
                     case 'declined':
                          $order->update_status( 'failed', 'Error:' );
-                         $order->add_order_note( 'Hey, votre commande a été déclinée. Veuillez réssayer!', true );
-                         wc_add_notice( __('Le paiement a été décliné:Veuillez réssayer!', 'woocommerce'), 'error' );
+                         $order->add_order_note( __('Hey, the order has been declined. Try again!', 'woocommerce-gateway-fedapay'), true );
+                         wc_add_notice( __('Transaction has been declined: Try again!', 'woocommerce-gateway-fedapay'), 'error' );
                          $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
                 }
               } catch(\Exception $e) {
-                  wc_add_notice( __('Payment error: '.$e->getMessage(), 'woocommerce'), 'error' );
+                  wc_add_notice( __('Payment error: '.$e->getMessage(), 'woocommerce-gateway-fedapay'), 'error' );
               }
               die();
           }
@@ -196,4 +194,11 @@ function fedapay_woocommerce_addon_activate() {
 		 wp_die( '<pre>This plugin requires PHP CURL library installled in order to be activated </pre>' );
 	}
 }
+
 register_activation_hook( __FILE__, 'fedapay_woocommerce_addon_activate' );
+
+function fedapay_load_plugin_textdomain() {
+    load_plugin_textdomain( 'woocommerce-gateway-fedapay', FALSE, basename(plugin_dir_path( dirname( __FILE__ ) )) . '/languages/');
+}
+
+add_action( 'plugins_loaded', 'fedapay_load_plugin_textdomain' );
