@@ -54,12 +54,12 @@ function init_fedapay_gateway_class() {
         if($this->testmode == 'yes')
       {
         \FedaPay\FedaPay::setApiKey($this->fedapay_testsecretkey);
-        \FedaPay\FedaPay::setApiBase('https://dev-api.fedapay.com');
+        \FedaPay\FedaPay::setEnvironment('sandbox');
       }
       else
       {
        \FedaPay\FedaPay::setApiKey($this->fedapay_livesecretkey);
-       \FedaPay\FedaPay::setApiBase('https://api.fedapay.com');
+       \FedaPay\FedaPay::setEnvironment('live');
       }
         // Lets check for SSL
         add_action( 'admin_notices', array( $this,	'do_ssl_check' ) );
