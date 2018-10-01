@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Woocommerce Gateway Fedapay
   * Plugin URI: https://wordpress.org/plugins/woocommerce-gateway-fedapay/
- * Description: Take credit card payments on your store using Fedapay.
+ * Description: Take credit card and mobile money payments on your store using Fedapay.
  * Author: Fedapay
  * Author URI: https://fedapay.com/
  * Requires at least: 4.4
