@@ -18,10 +18,19 @@
  *
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
- 	exit;
- }
+if (! defined('ABSPATH') ) {
+    exit;
+}
 
- // Load the plugin.
- require plugin_dir_path( __FILE__ ) . 'includes/class-wc-fedapay.php';
+define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.1.0' );
 
+if (! class_exists('WC_Fedapay_Gateway')) {
+    if (! class_exists('WC_Payment_Gateway')) {
+        return;
+    }
+
+    require_once(plugin_dir_path(__FILE__) . 'includes/class-wc-fedapay-plugin.php');
+
+    $plugin = new WC_Fedapay_Plugin( __FILE__, WC_FEDAPAY_GATEWAY_VERSION );
+    $plugin->init();
+}
