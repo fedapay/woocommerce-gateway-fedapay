@@ -54,7 +54,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
             \FedaPay\FedaPay::setEnvironment('live');
         }
         // Lets check for SSL
-        add_action('admin_notices', array( $this,    'do_ssl_check' ));
+        add_action('admin_notices', array( $this, 'do_ssl_check' ));
 
         // Save settings
         if (is_admin()) {
