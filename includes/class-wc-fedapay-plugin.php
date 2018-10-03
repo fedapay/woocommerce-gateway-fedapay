@@ -25,7 +25,7 @@ class WC_Fedapay_Plugin
      */
     public $version;
 
-    public function __constructor($file, $version)
+    public function __construct($file, $version)
     {
         $this->file = $file;
         $this->version = $version;
@@ -36,9 +36,8 @@ class WC_Fedapay_Plugin
      */
     public function init()
     {
-        die('init');
-        // Require Client
-        require_once(plugin_dir_path( $this->file ) . 'includes/class-wc-fedapay-gateway.php');
+        // Load gateway class
+        add_action('plugins_loaded', array($this, 'load_gateway_class' ) );
 
         // Load gateway class
         add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
@@ -48,6 +47,14 @@ class WC_Fedapay_Plugin
 
         // Load translations
         add_action('plugins_loaded', array($this, 'load_plugin_textdomain' ) );
+    }
+
+    /**
+     * Load gateway class
+     */
+    public function load_gateway_class()
+    {
+        require_once(plugin_dir_path( $this->file ) . 'includes/class-wc-fedapay-gateway.php');
     }
 
     /**
