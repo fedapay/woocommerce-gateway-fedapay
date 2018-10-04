@@ -70,3 +70,4 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The settings panel used to activate the gateway.
 2. The settings panel used to configure the gateway.
 3. Checkout with FedaPay.
+5. Choose payment mode.
