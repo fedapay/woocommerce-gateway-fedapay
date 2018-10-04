@@ -18,9 +18,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'woo_gateway_fedapay';
-        $this->icon = plugins_url('../assets/img/fedapay.png', __FILE__) ;
+        $this->icon = plugins_url('../assets/img/fedapay.svg', __FILE__) ;
         $this->has_fields = false;
-        $this->method_title = 'Woocommerce Gateway Fedapay';
+        $this->method_title = 'Woocommerce Fedapay Gateway';
         $this->order_button_text = __('Continue to payment', 'woocommerce-gateway-fedapay');
         $this->method_description = __('Fedapay Payment Gateway Plug-in for WooCommerce', 'woocommerce-gateway-fedapay');
 
@@ -98,27 +98,36 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $order_number = strtoupper($order_number);
 
         try {
-            $transaction = \FedaPay\Transaction::create([
-                "description" => "Article ".$order_number,
-                "amount" => (int) $amount,
-                "currency" => ["iso" => "XOF"],
-                "callback_url" => $callback_url,
-                "customer" => [
-                    "firstname" => $firstname,
-                    "lastname" => $lastname,
-                    "email" => $email,
-                    "phone_number" => [
-                        "number" => $phone,
-                        "country" => 'bj'
+            $transaction = \FedaPay\Transaction::create(array(
+                'description' => 'Article '.$order_number,
+                'amount' => (int) $amount,
+                'currency' => array('iso' => 'XOF'),
+                'callback_url' => $callback_url,
+                'customer' => [
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'email' => $email,
+                    'phone_number' => [
+                        'number' => $phone,
+                        'country' => 'bj'
                     ]
                 ]
-            ]);
+            ));
 
             $token = $transaction->generateToken();
             return [
                 'result'   => 'success',
                 'redirect' => $token->url
             ];
+        } catch (\FedaPay\Error\ApiConnection $e) {
+            wc_add_notice(var_dump($e->getErrors()), 'error');
+            wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
+            if ($e->hasErrors()) {
+                foreach ($e->getErrors() as $error) {
+                    wc_add_notice(__($error, 'woocommerce-gateway-fedapay'), 'error');
+                }
+            }
+            return;
         } catch (\Exception $e) {
             wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
             return;
@@ -148,6 +157,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
             $transaction_id = $_GET['id'];
             try {
                 $transaction = \FedaPay\Transaction::retrieve($transaction_id);
+
                 switch ($transaction->status) {
                     case 'approved':
                         $order->update_status('completed');
@@ -163,16 +173,16 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                         $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
-                    case 'declined':
+                    default:
                         $order->update_status('failed', 'Error:');
-                        $order->add_order_note(__('Hey, the order has been declined. Try again!', 'woocommerce-gateway-fedapay'), true);
-                        wc_add_notice(__('Transaction has been declined: Try again!', 'woocommerce-gateway-fedapay'), 'error');
+                        $order->add_order_note(__('Hey, the order payment failed. Try again!', 'woocommerce-gateway-fedapay'), true);
+                        wc_add_notice(__('Transaction failed: Try again!', 'woocommerce-gateway-fedapay'), 'error');
                         $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
                 }
             } catch (\Exception $e) {
-                wc_add_notice(__('Payment error: '.$e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
+                wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
             }
             die();
         }
