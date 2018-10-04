@@ -1,4 +1,4 @@
-=== Woocommerce Gateway Fedapay ===
+=== WooCommerce FedaPay Gateway ===
 Contributors: fedapay
 Tags: credit card, fedapay, mtn mobile money, woocommerce
 Requires at least: 4.5
@@ -33,7 +33,7 @@ FedaPay has no setup fees, no monthly fees, no hidden costs: you only get charge
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To
 do an automatic install of, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
-In the search field type “Woocommerce Gateway Fedapay” and click Search Plugins. Once you’ve found our plugin you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking "Install Now".
+In the search field type "FedaPay" and click Search Plugins. Once you’ve found our plugin you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking "Install Now".
 
 = Manual installation =
 
