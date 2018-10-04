@@ -71,3 +71,12 @@ If you get stuck, you can ask for help in the Plugin Forum.
 2. The settings panel used to configure the gateway.
 3. Checkout with FedaPay.
 5. Choose payment mode.
+
+== Changelog ==
+
+= 0.1.1 2018-10-04 =
+* Fix - Add banners and logos for better branding
+* Fix - Improve errors display
+* Fix - Update plugin asset files
+* Fix - Translate plugin into french
+* Fix - Update changelog file

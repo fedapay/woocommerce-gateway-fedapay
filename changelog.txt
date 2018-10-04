@@ -1,0 +1,11 @@
+*** Changelog ***
+
+= 0.1.1 2018-10-04 =
+* Fix - Add banners and logos for better branding
+* Fix - Improve errors display
+* Fix - Update plugin asset files
+* Fix - Translate plugin into french
+* Fix - Update changelog file
+
+= 0.1.0 =
+* Beta release
