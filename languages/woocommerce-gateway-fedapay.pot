@@ -8,7 +8,7 @@ msgstr ""
 "Woocommerce Gateway "
 "Fedapay v1.0.0\n"
 "POT-Creation-Date: "
-"2018-09-21 11:47+0100\n"
+"2018-10-04 11:45+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your "
 "Name <you@example.com>\n"
@@ -52,22 +52,17 @@ msgstr ""
 "X-Poedit-"
 "SearchPath-0: .\n"
 
-#: includes/class-wc-fedapay.php:30
+#: includes/class-wc-fedapay-gateway.php:24
 msgid "Continue to payment"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:31
+#: includes/class-wc-fedapay-gateway.php:25
 msgid ""
 "Fedapay Payment Gateway "
 "Plug-in for WooCommerce"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:131
-#: includes/class-wc-fedapay.php:179
-msgid "Payment error: "
-msgstr ""
-
-#: includes/class-wc-fedapay.php:140
+#: includes/class-wc-fedapay-gateway.php:140
 #, php-format
 msgid ""
 "<strong>%s</strong> is "
@@ -83,40 +78,48 @@ msgid ""
 "secured.</a>"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:158
+#: includes/class-wc-fedapay-gateway.php:163
 msgid ""
 "Transaction completed "
 "successfully"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:159
+#: includes/class-wc-fedapay-gateway.php:164
 msgid ""
 "Hey, the order has been "
 "completed. Thanks!"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:165
+#: includes/class-wc-fedapay-gateway.php:170
 msgid ""
 "Hey, the order has been "
 "cancelled. Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:166
+#: includes/class-wc-fedapay-gateway.php:171
 msgid ""
 "Transaction has been "
 "cancelled: Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:172
+#: includes/class-wc-fedapay-gateway.php:177
 msgid ""
-"Hey, the order has been "
-"declined. Try again!"
+"Hey, the order payment "
+"failed. Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay.php:173
+#: includes/class-wc-fedapay-gateway.php:178
 msgid ""
-"Transaction has been "
-"declined: Try again!"
+"Transaction failed: Try "
+"again!"
+msgstr ""
+
+#: includes/class-wc-fedapay-gateway.php:195
+msgid "Payment error: "
+msgstr ""
+
+#: includes/class-wc-fedapay-gateway.php:200
+msgid " "
 msgstr ""
 
 #: includes/settings-fedapay.php:11
@@ -170,7 +173,7 @@ msgid ""
 "Enable Fedapay sandbox"
 msgstr ""
 
-#: includes/settings-fedapay.php:36
+#: includes/settings-fedapay.php:35
 #, php-format
 msgid ""
 "Fedapay sandbox can be "
@@ -180,34 +183,39 @@ msgid ""
 "account</a>."
 msgstr ""
 
-#: includes/settings-fedapay.php:39
+#: includes/settings-fedapay.php:38
 msgid "Test Secret Key"
 msgstr ""
 
-#: includes/settings-fedapay.php:41
+#: includes/settings-fedapay.php:40
 msgid ""
 "This is the Test Secret "
 "Key found in API Keys in "
 "Account Dashboard."
 msgstr ""
 
-#: includes/settings-fedapay.php:44
+#: includes/settings-fedapay.php:43
 msgid ""
 "Fedapay Test Secret Key"
 msgstr ""
 
-#: includes/settings-fedapay.php:47
+#: includes/settings-fedapay.php:46
 msgid "Live Secret Key"
 msgstr ""
 
-#: includes/settings-fedapay.php:49
+#: includes/settings-fedapay.php:48
 msgid ""
 "This is the Live Secret "
 "Key found in API Keys in "
 "Account Dashboard."
 msgstr ""
 
-#: includes/settings-fedapay.php:52
+#: includes/settings-fedapay.php:51
 msgid ""
 "Fedapay Live Secret Key"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Take credit card and mobile money payments on your store using Fedapay."
 msgstr ""
