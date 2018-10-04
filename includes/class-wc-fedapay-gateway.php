@@ -34,25 +34,15 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         // Load the settings.
         $this->init_settings();
-        $this->title = $this->get_option('title');
-        $this->description = $this->get_option('description');
-        $this->enabled = $this->get_option('enabled');
-        $this->testmode = 'yes' === $this->get_option('testmode');
-        $this->fedapay_testsecretkey = $this->get_option('fedapay_testsecretkey');
-        $this->fedapay_livesecretkey = $this->get_option('fedapay_livesecretkey');
 
         // Turn these settings into variables we can use
         foreach ($this->settings as $setting_key => $value) {
             $this->$setting_key = $value;
         }
 
-        if ($this->testmode == 'yes') {
-            \FedaPay\FedaPay::setApiKey($this->fedapay_testsecretkey);
-            \FedaPay\FedaPay::setEnvironment('sandbox');
-        } else {
-            \FedaPay\FedaPay::setApiKey($this->fedapay_livesecretkey);
-            \FedaPay\FedaPay::setEnvironment('live');
-        }
+        // Setup FedaPay SDK
+        $this->setupFedaPaySdk($this->testmode, $this->fedapay_testsecretkey, $this->fedapay_livesecretkey);
+
         // Lets check for SSL
         add_action('admin_notices', array( $this, 'do_ssl_check' ));
 
@@ -61,13 +51,27 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
             add_action('woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ));
         }
 
-        add_action('woocommerce_api_'.strtolower(get_class($this)), array( $this, 'check_order_status' ));
+        add_action('woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ));
     }
 
+    /**
+     * Init fedapay sdk
+     */
     private function get_fedapay_sdk()
     {
         if (! class_exists('Fedapay\Fedapay')) {
             require_once plugin_dir_path(dirname(__FILE__)) . 'vendor/fedapay-php/init.php';
+        }
+    }
+
+    private function setupFedaPaySdk($test_mode, $test_sk, $live_sk)
+    {
+        if ($test_mode == 'yes') {
+            \FedaPay\FedaPay::setApiKey($test_sk);
+            \FedaPay\FedaPay::setEnvironment('sandbox');
+        } else {
+            \FedaPay\FedaPay::setApiKey($live_sk);
+            \FedaPay\FedaPay::setEnvironment('live');
         }
     }
 
@@ -81,6 +85,8 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
     /**
      * We're processing the payments here
+     * @param int $order_id
+     * @return array
      */
     public function process_payment($order_id)
     {
@@ -119,18 +125,8 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                 'result'   => 'success',
                 'redirect' => $token->url
             ];
-        } catch (\FedaPay\Error\ApiConnection $e) {
-            wc_add_notice(var_dump($e->getErrors()), 'error');
-            wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
-            if ($e->hasErrors()) {
-                foreach ($e->getErrors() as $error) {
-                    wc_add_notice(__($error, 'woocommerce-gateway-fedapay'), 'error');
-                }
-            }
-            return;
         } catch (\Exception $e) {
-            wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
-            return;
+            $this->displayErrors($e);
         }
     }
 
@@ -146,6 +142,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         }
     }
 
+    /**
+     * Check Order status on callback
+     */
     public function check_order_status()
     {
         global $woocommerce;
@@ -182,9 +181,25 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                     break;
                 }
             } catch (\Exception $e) {
-                wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
+                $this->displayErrors($e);
             }
-            die();
+        }
+    }
+
+    /**
+     * Display payment request errors
+     * @param \Exception $e
+     */
+    private function displayErrors(\Exception $e)
+    {
+        wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
+
+        if ($e instanceof \FedaPay\Error\ApiConnection && $e->hasErrors()) {
+            foreach ($e->getErrors() as $key => $errors) {
+                foreach ($errors as $error) {
+                    wc_add_notice(__($key . ' ' . $error, 'woocommerce-gateway-fedapay'), 'error');
+                }
+            }
         }
     }
 }
