@@ -46,7 +46,7 @@ class WC_Fedapay_Plugin
         register_activation_hook($this->file, array( $this, 'woocommerce_addon_activate' ) );
 
         // Load translations
-        add_action('plugins_loaded', array($this, 'load_plugin_textdomain' ) );
+        add_action('init', array($this, 'load_plugin_textdomain' ) );
     }
 
     /**
@@ -85,7 +85,7 @@ class WC_Fedapay_Plugin
         load_plugin_textdomain(
             'woo-gateway-fedapay',
             false,
-            basename( plugin_dir_path( dirname( $this->file ) ) ) . '/languages/'
+            dirname( plugin_basename( $this->file ) ) . '/languages/'
         );
     }
 }

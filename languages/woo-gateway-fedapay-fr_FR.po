@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce FedaPay Gateway 0.1.1\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2018-10-04 11:45+0100\n"
+"POT-Creation-Date: 2018-10-05 12:43+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Fedapay Team <translations@fedapay.com>\n"
@@ -74,7 +74,7 @@ msgstr "Erreur de paiement: "
 
 #: includes/class-wc-fedapay-gateway.php:200
 msgid " "
-msgstr ""
+msgstr " "
 
 #: includes/settings-fedapay.php:11
 msgid "Enable/Disable"
