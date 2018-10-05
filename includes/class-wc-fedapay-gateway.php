@@ -21,8 +21,8 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $this->icon = plugins_url('../assets/img/fedapay.svg', __FILE__) ;
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Fedapay Gateway';
-        $this->order_button_text = __('Continue to payment', 'woocommerce-gateway-fedapay');
-        $this->method_description = __('Fedapay Payment Gateway Plug-in for WooCommerce', 'woocommerce-gateway-fedapay');
+        $this->order_button_text = __('Continue to payment', 'woo-gateway-fedapay');
+        $this->method_description = __('Fedapay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
 
         $this->supports = ['products'];
 
@@ -137,7 +137,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         if ($this->enabled == "yes") {
             if (get_option('woocommerce_force_ssl_checkout') == "no") {
-                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woocommerce-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=advanced')) ."</p></div>";
+                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=advanced')) ."</p></div>";
             }
         }
     }
@@ -160,22 +160,22 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                 switch ($transaction->status) {
                     case 'approved':
                         $order->update_status('completed');
-                        wc_add_notice(__('Transaction completed successfully', 'woocommerce-gateway-fedapay'), 'success');
-                        $order->add_order_note(__('Hey, the order has been completed. Thanks!', 'woocommerce-gateway-fedapay'), true);
+                        wc_add_notice(__('Transaction completed successfully', 'woo-gateway-fedapay'), 'success');
+                        $order->add_order_note(__('Hey, the order has been completed. Thanks!', 'woo-gateway-fedapay'), true);
                         $woocommerce->cart->empty_cart();
                         wp_redirect($this->get_return_url($order));
                     break;
                     case 'canceled':
                         $order->update_status('cancelled', 'Error:');
-                        $order->add_order_note(__('Hey, the order has been cancelled. Try again!', 'woocommerce-gateway-fedapay'), true);
-                        wc_add_notice(__('Transaction has been cancelled: Try again!', 'woocommerce-gateway-fedapay'), 'error');
+                        $order->add_order_note(__('Hey, the order has been cancelled. Try again!', 'woo-gateway-fedapay'), true);
+                        wc_add_notice(__('Transaction has been cancelled: Try again!', 'woo-gateway-fedapay'), 'error');
                         $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
                     default:
                         $order->update_status('failed', 'Error:');
-                        $order->add_order_note(__('Hey, the order payment failed. Try again!', 'woocommerce-gateway-fedapay'), true);
-                        wc_add_notice(__('Transaction failed: Try again!', 'woocommerce-gateway-fedapay'), 'error');
+                        $order->add_order_note(__('Hey, the order payment failed. Try again!', 'woo-gateway-fedapay'), true);
+                        wc_add_notice(__('Transaction failed: Try again!', 'woo-gateway-fedapay'), 'error');
                         $url = wc_get_checkout_url();
                         wp_redirect($url);
                     break;
@@ -192,12 +192,12 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
      */
     private function displayErrors(\Exception $e)
     {
-        wc_add_notice(__('Payment error: '. $e->getMessage(), 'woocommerce-gateway-fedapay'), 'error');
+        wc_add_notice(__('Payment error: '. $e->getMessage(), 'woo-gateway-fedapay'), 'error');
 
         if ($e instanceof \FedaPay\Error\ApiConnection && $e->hasErrors()) {
             foreach ($e->getErrors() as $key => $errors) {
                 foreach ($errors as $error) {
-                    wc_add_notice(__($key . ' ' . $error, 'woocommerce-gateway-fedapay'), 'error');
+                    wc_add_notice(__($key . ' ' . $error, 'woo-gateway-fedapay'), 'error');
                 }
             }
         }

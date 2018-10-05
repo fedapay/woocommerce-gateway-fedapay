@@ -83,7 +83,7 @@ class WC_Fedapay_Plugin
     public function load_plugin_textdomain()
     {
         load_plugin_textdomain(
-            'woocommerce-gateway-fedapay',
+            'woo-gateway-fedapay',
             false,
             basename( plugin_dir_path( dirname( $this->file ) ) ) . '/languages/'
         );
