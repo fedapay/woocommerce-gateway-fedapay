@@ -63,7 +63,7 @@ class WC_Fedapay_Plugin
      */
     protected function _check_dependencies()
     {
-        if (! class_exists( 'WooCommerce' )) {
+        if (! class_exists('WooCommerce')) {
             throw new Exception(__('WooCommerce FedaPay Gateway requires WooCommerce to be activated', 'woo-gateway-fedapay'));
         }
 
@@ -82,7 +82,8 @@ class WC_Fedapay_Plugin
     public function init()
     {
         // Bootstrap
-        add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
+        add_action('plugins_loaded', array( $this, 'bootstrap' ));
+        add_action('wp_ajax_wc_fedapay_gateway_dismiss_notice_message', array( $this, 'ajax_dismiss_notice' ));
     }
 
     /**
@@ -97,8 +98,9 @@ class WC_Fedapay_Plugin
 
             // Load gateway class
             add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
+            delete_option('wc_fedapay_gateway_bootstrap_warning_message');
         } catch (Exception $e) {
-            $this->error_message = $e->getMessage();
+            update_option('wc_fedapay_gateway_bootstrap_warning_message', $e->getMessage());
 
             add_action('admin_notices', array( $this, 'show_bootstrap_warning' ));
         }
@@ -119,14 +121,46 @@ class WC_Fedapay_Plugin
      */
     public function show_bootstrap_warning()
     {
-        if (! empty( $this->error_message )) {
+        $dependencies_message = get_option('wc_fedapay_gateway_bootstrap_warning_message', '');
+
+        if (! empty($dependencies_message) && 'yes' !== get_option('wc_fedapay_gateway_bootstrap_warning_message_dismissed', 'no' )) {
             ?>
-            <div class="notice notice-warning is-dismissible ppec-dismiss-bootstrap-warning-message">
+            <div class="notice notice-warning is-dismissible wc-fedapay-gateway-dismiss-bootstrap-warning-message">
                 <p>
-                    <strong><?php echo esc_html( $this->error_message ); ?></strong>
+                    <strong><?php echo esc_html($dependencies_message); ?></strong>
                 </p>
             </div>
+            <script>
+            ( function( $ ) {
+                $( '.wc-fedapay-gateway-dismiss-bootstrap-warning-message' ).on( 'click', '.notice-dismiss', function() {
+                    jQuery.post( "<?php echo esc_url(admin_url('admin-ajax.php')); ?>", {
+                        action: "wc_fedapay_gateway_dismiss_notice_message",
+                        dismiss_action: "wc_fedapay_gateway_dismiss_bootstrap_warning_message",
+                        nonce: "<?php echo esc_js(wp_create_nonce('wc_fedapay_gateway_dismiss_notice')); ?>"
+                    } );
+                } );
+            } )( jQuery );
+            </script>
             <?php
+
         }
+    }
+
+    /**
+     * Dismiss ajax notices
+     */
+    public function ajax_dismiss_notice()
+    {
+        if (empty($_POST['dismiss_action'])) {
+            return;
+        }
+
+        check_ajax_referer('wc_fedapay_gateway_dismiss_notice', 'nonce');
+        switch ($_POST['dismiss_action']) {
+            case 'wc_fedapay_gateway_dismiss_bootstrap_warning_message':
+                update_option('wc_fedapay_gateway_bootstrap_warning_message_dismissed', 'yes');
+                break;
+        }
+        wp_die();
     }
 }
