@@ -39,77 +39,23 @@ class WC_Fedapay_Plugin
     }
 
     /**
-     * Init plugin
-     */
-    public function init()
-    {
-        // Bootstrap
-        add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
-
-        // Load translations
-        add_action('init', array($this, 'load_plugin_textdomain' ));
-    }
-
-    public function bootstrap()
-    {
-        try {
-            $this->_check_dependencies();
-            // Load gateway class
-            add_action('plugins_loaded', array($this, 'load_gateway_class' ));
-
-            // Load gateway class
-            add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
-        } catch (Exception $e) {
-            $this->error_message = $e->getMessage();
-
-            add_action('admin_notices', array( $this, 'show_bootstrap_warning' ));
-        }
-    }
-
-    /**
      * Load gateway class
      */
-    public function load_gateway_class()
+    protected function _load_gateway_class()
     {
         require_once(plugin_dir_path($this->file) . 'includes/class-wc-fedapay-gateway.php');
     }
 
     /**
-     * Add FedaPay Gateway to the liste of WooCommerce gateways
-     */
-    public function add_fedapay_gateway_class($gateways)
-    {
-        $gateways[] = 'WC_Fedapay_Gateway';
-
-        return $gateways;
-    }
-
-    /**
      * Load translations
      */
-    public function load_plugin_textdomain()
+    protected function _load_plugin_textdomain()
     {
         load_plugin_textdomain(
             'woo-gateway-fedapay',
             false,
             dirname(plugin_basename($this->file)) . '/languages/'
         );
-    }
-
-    /**
-     * Show warnings
-     */
-    public function show_bootstrap_warning()
-    {
-        if (! empty( $this->error_message )) {
-            ?>
-            <div class="notice notice-warning is-dismissible ppec-dismiss-bootstrap-warning-message">
-                <p>
-                    <strong><?php echo esc_html( $this->error_message ); ?></strong>
-                </p>
-            </div>
-            <?php
-        }
     }
 
     /**
@@ -127,6 +73,60 @@ class WC_Fedapay_Plugin
 
         if (! function_exists('curl_init')) {
             throw new Exception(__('WooCommerce FedaPay Gateway requires cURL to be installed on your server', 'woo-gateway-fedapay'));
+        }
+    }
+
+    /**
+     * Init plugin
+     */
+    public function init()
+    {
+        // Bootstrap
+        add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
+    }
+
+    /**
+     * Bootstrap plugin
+     */
+    public function bootstrap()
+    {
+        try {
+            $this->_load_plugin_textdomain();
+            $this->_check_dependencies();
+            $this->_load_gateway_class();
+
+            // Load gateway class
+            add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
+        } catch (Exception $e) {
+            $this->error_message = $e->getMessage();
+
+            add_action('admin_notices', array( $this, 'show_bootstrap_warning' ));
+        }
+    }
+
+    /**
+     * Add FedaPay Gateway to the liste of WooCommerce gateways
+     */
+    public function add_fedapay_gateway_class($gateways)
+    {
+        $gateways[] = 'WC_Fedapay_Gateway';
+
+        return $gateways;
+    }
+
+    /**
+     * Show warnings
+     */
+    public function show_bootstrap_warning()
+    {
+        if (! empty( $this->error_message )) {
+            ?>
+            <div class="notice notice-warning is-dismissible ppec-dismiss-bootstrap-warning-message">
+                <p>
+                    <strong><?php echo esc_html( $this->error_message ); ?></strong>
+                </p>
+            </div>
+            <?php
         }
     }
 }
