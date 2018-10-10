@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce FedaPay Gateway 0.1.1\n"
-"POT-Creation-Date: 2018-10-05 12:43+0100\n"
+"POT-Creation-Date: 2018-10-10 15:20+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Fedapay Team <translations@fedapay.com>\n"
@@ -72,6 +72,21 @@ msgstr ""
 
 #: includes/class-wc-fedapay-gateway.php:200
 msgid " "
+msgstr ""
+
+#: includes/class-wc-fedapay-plugin.php:115
+msgid "WooCommerce FedaPay Gateway requires WooCommerce to be activated"
+msgstr ""
+
+#: includes/class-wc-fedapay-plugin.php:119
+msgid ""
+"WooCommerce FedaPay Gateway requires WooCommerce version 2.5 or greater"
+msgstr ""
+
+#: includes/class-wc-fedapay-plugin.php:123
+msgid ""
+"WooCommerce FedaPay Gateway requires cURL to be installed on your "
+"server"
 msgstr ""
 
 #: includes/settings-fedapay.php:11
@@ -149,7 +164,7 @@ msgstr ""
 msgid "Fedapay Live Secret Key"
 msgstr ""
 
-#. Description of the plugin/theme
+#. Description of the plugin
 msgid ""
 "Take credit card and mobile money payments on your store using Fedapay."
 msgstr ""

@@ -25,6 +25,13 @@ class WC_Fedapay_Plugin
      */
     public $version;
 
+    /**
+     * Notice .
+     *
+     * @var string
+     */
+    public $error_message;
+
     public function __construct($file, $version)
     {
         $this->file = $file;
@@ -36,17 +43,27 @@ class WC_Fedapay_Plugin
      */
     public function init()
     {
-        // Load gateway class
-        add_action('plugins_loaded', array($this, 'load_gateway_class' ) );
-
-        // Load gateway class
-        add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
-
-        // Register activation hook
-        register_activation_hook($this->file, array( $this, 'woocommerce_addon_activate' ) );
+        // Bootstrap
+        add_action( 'plugins_loaded', array( $this, 'bootstrap' ) );
 
         // Load translations
-        add_action('init', array($this, 'load_plugin_textdomain' ) );
+        add_action('init', array($this, 'load_plugin_textdomain' ));
+    }
+
+    public function bootstrap()
+    {
+        try {
+            $this->_check_dependencies();
+            // Load gateway class
+            add_action('plugins_loaded', array($this, 'load_gateway_class' ));
+
+            // Load gateway class
+            add_filter('woocommerce_payment_gateways', array( $this, 'add_fedapay_gateway_class' ));
+        } catch (Exception $e) {
+            $this->error_message = $e->getMessage();
+
+            add_action('admin_notices', array( $this, 'show_bootstrap_warning' ));
+        }
     }
 
     /**
@@ -54,7 +71,7 @@ class WC_Fedapay_Plugin
      */
     public function load_gateway_class()
     {
-        require_once(plugin_dir_path( $this->file ) . 'includes/class-wc-fedapay-gateway.php');
+        require_once(plugin_dir_path($this->file) . 'includes/class-wc-fedapay-gateway.php');
     }
 
     /**
@@ -68,16 +85,6 @@ class WC_Fedapay_Plugin
     }
 
     /**
-     * Check if this Wordpress installation support FedaPay dependencies
-     */
-    public function woocommerce_addon_activate()
-    {
-        if (!function_exists('curl_exec')) {
-            wp_die('<pre>This plugin requires PHP CURL library installled in order to be activated </pre>');
-        }
-    }
-
-    /**
      * Load translations
      */
     public function load_plugin_textdomain()
@@ -85,7 +92,41 @@ class WC_Fedapay_Plugin
         load_plugin_textdomain(
             'woo-gateway-fedapay',
             false,
-            dirname( plugin_basename( $this->file ) ) . '/languages/'
+            dirname(plugin_basename($this->file)) . '/languages/'
         );
+    }
+
+    /**
+     * Show warnings
+     */
+    public function show_bootstrap_warning()
+    {
+        if (! empty( $this->error_message )) {
+            ?>
+            <div class="notice notice-warning is-dismissible ppec-dismiss-bootstrap-warning-message">
+                <p>
+                    <strong><?php echo esc_html( $this->error_message ); ?></strong>
+                </p>
+            </div>
+            <?php
+        }
+    }
+
+    /**
+     * Check plugin dependencies
+     */
+    protected function _check_dependencies()
+    {
+        if (! class_exists( 'WooCommerce' )) {
+            throw new Exception(__('WooCommerce FedaPay Gateway requires WooCommerce to be activated', 'woo-gateway-fedapay'));
+        }
+
+        if (version_compare(WooCommerce::instance()->version, '2.5', '<')) {
+            throw new Exception(__('WooCommerce FedaPay Gateway requires WooCommerce version 2.5 or greater', 'woo-gateway-fedapay'));
+        }
+
+        if (! function_exists('curl_init')) {
+            throw new Exception(__('WooCommerce FedaPay Gateway requires cURL to be installed on your server', 'woo-gateway-fedapay'));
+        }
     }
 }
