@@ -1,5 +1,10 @@
 *** Changelog ***
 
+= 0.1.2 2018-10-10 =
+* Fix - Implement notice warning dismissal
+* Fix - Improve translations
+* Fix - Show warning message if dependencies are not satisfied
+
 = 0.1.1 2018-10-04 =
 * Fix - Add banners and logos for better branding
 * Fix - Improve errors display
