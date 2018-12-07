@@ -14,56 +14,10 @@ class Requestor
     const PRODUCTION_BASE = 'https://api.fedapay.com';
 
     /**
-    * Api key
-    * @var string
-    */
-    protected $apiKey;
-
-    /**
-    * Api base
-    * @var string
-    */
-    protected $apiBase;
-
-    /**
-    * Token
-    * @var string
-    */
-    protected $token;
-
-    /**
-    * Api environment
-    * @var string
-    */
-    protected $environment;
-
-    /**
-    * Api version
-    * @var string
-    */
-    protected $apiVersion;
-
-    /**
-    * Account id
-    * @var string
-    */
-    protected $accountId;
-
-    /**
     * Http Client
     * @var GuzzleHttp\ClientInterface
     */
     protected static $httpClient;
-
-    public function __construct()
-    {
-        $this->apiKey = FedaPay::getApiKey();
-        $this->apiBase = FedaPay::getApiBase();
-        $this->token = FedaPay::getToken();
-        $this->environment = FedaPay::getEnvironment();
-        $this->apiVersion = FedaPay::getApiVersion();
-        $this->accountId = FedaPay::getAccountId();
-    }
 
     /**
      * @static
@@ -148,14 +102,19 @@ class Requestor
      */
     protected function defaultHeaders()
     {
+        $auth = FedaPay::getApiKey() ?: FedaPay::getToken();
+        $apiVersion = FedaPay::getApiVersion();
+        $accountId = FedaPay::getAccountId();
+
         $default = [
             'X-Version' => FedaPay::VERSION,
+            'X-Api-Version' => $apiVersion,
             'X-Source' => 'FedaPay PhpLib',
-            'Authorization' => 'Bearer '. ($this->apiKey ?: $this->token)
+            'Authorization' => "Bearer $auth"
         ];
 
-        if ($this->accountId) {
-            $default['FedaPay-Account'] = $this->accountId;
+        if ($accountId) {
+            $default['FedaPay-Account'] = $accountId;
         }
 
         return $default;
@@ -167,11 +126,14 @@ class Requestor
      */
     protected function baseUrl()
     {
-        if ($this->apiBase) {
-            return $this->apiBase;
+        $apiBase = FedaPay::getApiBase();
+        $environment = FedaPay::getEnvironment();
+
+        if ($apiBase) {
+            return $apiBase;
         }
 
-        switch ($this->environment) {
+        switch ($environment) {
             case 'development':
             case 'sandbox':
             case 'test':
@@ -189,7 +151,7 @@ class Requestor
      */
     protected function url($path)
     {
-        return $this->baseUrl() . '/' . $this->apiVersion . $path;
+        return $this->baseUrl() . '/' . FedaPay::getApiVersion() . $path;
     }
 
     /**
