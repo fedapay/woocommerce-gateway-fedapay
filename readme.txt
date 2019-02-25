@@ -74,6 +74,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.1.3 2019-02-25 =
+* Fix - Update checkout logo
+
 = 0.1.2 2018-10-10 =
 * Fix - Implement notice warning dismissal
 * Fix - Improve translations
