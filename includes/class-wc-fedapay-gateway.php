@@ -35,6 +35,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         // Load the settings.
         $this->init_settings();
 
+
         // Turn these settings into variables we can use
         foreach ($this->settings as $setting_key => $value) {
             $this->$setting_key = $value;
@@ -45,6 +46,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         // Lets check for SSL
         add_action('admin_notices', array( $this, 'do_ssl_check' ));
+
+        add_action('admin_notices', array($this, 'currency_check'));
+
 
         // Save settings
         if (is_admin()) {
@@ -83,6 +87,68 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $this->form_fields =  include plugin_dir_path(__FILE__) . '/settings-fedapay.php';
     }
 
+
+
+    /**
+     * To make sure that the currency used one the store
+     * is the one we actually support
+    */
+    public function currency_check()
+    {
+        $currency = get_woocommerce_currency();
+
+        $used_currency = array('XOF');
+
+        if (!in_array($currency, $used_currency))
+        {
+            echo "<div class=\"error\"><p>". sprintf(__('<strong>FedaPay ne supporte pas la devise que vous utilisez actuellement. Veuillez bien définir la devise de votre boutique sur XOF (FCFA) <a href="' . admin_url('admin.php?page=wc-settings&tab=general') . '">ici.</a></strong>', 'woo-gateway-fedapay')),"</p></div>";
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    /**
+     * Store each order with its transaction id
+     */
+    public function addOrderTransaction($order_id, $transaction_id, $hash)
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "fedapay_orders_transactions";
+
+        $wpdb->insert(
+            $table_name,
+            array(
+                'transaction_id' => $transaction_id,
+                'order_id' => $order_id,
+                'hash' => $hash,
+                'created_at' => current_time( 'mysql' ),
+            )
+        );
+    }
+
+    /**
+     * Retrieve order with transaction info from database
+     */
+    public function getOrderTransaction($order_id, $transaction_id)
+    {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "fedapay_orders_transactions";
+        $info =  $wpdb->get_results("SELECT * FROM $table_name 
+                            WHERE order_id = $order_id 
+                            AND transaction_id = $transaction_id 
+                            LIMIT 1");
+
+        if(!empty($info[0])){
+            return $info[0];
+        }
+
+        return null;
+    }
+
     /**
      * We're processing the payments here
      * @param int $order_id
@@ -90,6 +156,8 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
      */
     public function process_payment($order_id)
     {
+
+
         global $woocommerce;
 
         $order      = wc_get_order($order_id);
@@ -99,35 +167,49 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $lastname   = $order->billing_last_name;
         $email      = $order->billing_email;
 
-        $callback_url = home_url('/') . 'wc-api/' . get_class($this) . '/?order_id=' . $order_id;
+        $token = md5(uniqid());
+        $hash = md5($order_id . $amount . $order->currency . $token);
+
+        $callback_url = home_url('/') . 'wc-api/' . get_class($this) . '/?order_id=' . $order_id . '&token=' . $token;
         $order_number = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 4);
         $order_number = strtoupper($order_number);
 
-        try {
-            $transaction = \FedaPay\Transaction::create(array(
-                'description' => 'Article '.$order_number,
-                'amount' => (int) $amount,
-                'currency' => array('iso' => 'XOF'),
-                'callback_url' => $callback_url,
-                'customer' => [
-                    'firstname' => $firstname,
-                    'lastname' => $lastname,
-                    'email' => $email,
-                    'phone_number' => [
-                        'number' => $phone,
-                        'country' => 'bj'
-                    ]
-                ]
-            ));
-
-            $token = $transaction->generateToken();
-            return [
-                'result'   => 'success',
-                'redirect' => $token->url
-            ];
-        } catch (\Exception $e) {
-            $this->displayErrors($e);
+        if($order->currency !== 'XOF'){
+            wc_add_notice( __("FedaPay ne supporte que le XOF comme devise actuellement. Veuillez bien selectionner le XOF (FCFA) ou contacter l'administrateur de la boutique.", 'woo-gateway-fedapay'), 'error');
         }
+
+
+            try {
+
+                $transaction = \FedaPay\Transaction::create(array(
+                    'description' => 'Article '.$order_number,
+                    'amount' => (int) $amount,
+                    'currency' => array('iso'=>$order->currency),
+                    'callback_url' => $callback_url,
+                    'customer' => [
+                        'firstname' => $firstname,
+                        'lastname' => $lastname,
+                        'email' => $email,
+                        'phone_number' => [
+                            'number' => $phone,
+                            'country' => 'bj'
+                        ]
+                    ]
+                ));
+
+                $this->addOrderTransaction($order_id,$transaction->id,$hash);
+
+                $token = $transaction->generateToken();
+                return [
+                    'result'   => 'success',
+                    'redirect' => $token->url
+                ];
+            } catch (\Exception $e) {
+
+                $this->displayErrors($e);
+
+            }
+
     }
 
     /**
@@ -137,7 +219,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         if ($this->enabled == "yes") {
             if (get_option('woocommerce_force_ssl_checkout') == "no") {
-                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=advanced')) ."</p></div>";
+                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="' . admin_url('admin.php?page=wc-settings&tab=advanced') . '">forcing the checkout pages to be secured.</a></strong>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=general')) ."</p></div>";
             }
         }
     }
@@ -149,36 +231,55 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         global $woocommerce;
 
-        $order_id = $_GET['order_id'];
-        $order = wc_get_order($order_id);
+        $order_id = 0;
+        $transaction_id = 0;
+        $token = null;
+
+        if (isset($_GET['order_id'])) {
+            $order_id = $_GET['order_id'];
+        }
 
         if (isset($_GET['id'])) {
             $transaction_id = $_GET['id'];
+        }
+
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+        }
+
+        $order = wc_get_order($order_id);
+        $order_transaction = $this->getOrderTransaction($order_id, $transaction_id);
+
+        if ($order && $order_transaction) {
             try {
                 $transaction = \FedaPay\Transaction::retrieve($transaction_id);
+                $hash = md5($order_id . $transaction->amount . $order->currency . $token);
 
-                switch ($transaction->status) {
-                    case 'approved':
-                        $order->update_status('completed');
-                        wc_add_notice(__('Transaction completed successfully', 'woo-gateway-fedapay'), 'success');
-                        $order->add_order_note(__('Hey, the order has been completed. Thanks!', 'woo-gateway-fedapay'), true);
-                        $woocommerce->cart->empty_cart();
-                        wp_redirect($this->get_return_url($order));
-                    break;
-                    case 'canceled':
-                        $order->update_status('cancelled', 'Error:');
-                        $order->add_order_note(__('Hey, the order has been cancelled. Try again!', 'woo-gateway-fedapay'), true);
-                        wc_add_notice(__('Transaction has been cancelled: Try again!', 'woo-gateway-fedapay'), 'error');
-                        $url = wc_get_checkout_url();
-                        wp_redirect($url);
-                    break;
-                    default:
-                        $order->update_status('failed', 'Error:');
-                        $order->add_order_note(__('Hey, the order payment failed. Try again!', 'woo-gateway-fedapay'), true);
-                        wc_add_notice(__('Transaction failed: Try again!', 'woo-gateway-fedapay'), 'error');
-                        $url = wc_get_checkout_url();
-                        wp_redirect($url);
-                    break;
+                if($hash && $hash === $order_transaction->hash)
+                {
+                    switch ($transaction->status) {
+                        case 'approved':
+                            $order->update_status('completed');
+                            wc_add_notice(__('Transaction completed successfully', 'woo-gateway-fedapay'), 'success');
+                            $order->add_order_note(__('Hey, the order has been completed. Thanks!', 'woo-gateway-fedapay'), true);
+                            $woocommerce->cart->empty_cart();
+                            wp_redirect($this->get_return_url($order));
+                            break;
+                        case 'canceled':
+                            $order->update_status('cancelled', 'Error:');
+                            $order->add_order_note(__('Hey, the order has been cancelled. Try again!', 'woo-gateway-fedapay'), true);
+                            wc_add_notice(__('Transaction has been cancelled: Try again!', 'woo-gateway-fedapay'), 'error');
+                            $url = wc_get_checkout_url();
+                            wp_redirect($url);
+                            break;
+                        default:
+                            $order->update_status('failed', 'Error:');
+                            $order->add_order_note(__('Hey, the order payment failed. Try again!', 'woo-gateway-fedapay'), true);
+                            wc_add_notice(__('Transaction failed: Try again!', 'woo-gateway-fedapay'), 'error');
+                            $url = wc_get_checkout_url();
+                            wp_redirect($url);
+                            break;
+                    }
                 }
             } catch (\Exception $e) {
                 $this->displayErrors($e);

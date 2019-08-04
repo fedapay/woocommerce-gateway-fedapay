@@ -83,6 +83,7 @@ class WC_Fedapay_Plugin
     {
         // Bootstrap
         add_action('plugins_loaded', array( $this, 'bootstrap' ));
+        add_action('plugins_loaded', array( $this, 'createTables' ));
         add_action('wp_ajax_wc_fedapay_gateway_dismiss_notice_message', array( $this, 'ajax_dismiss_notice' ));
     }
 
@@ -104,6 +105,33 @@ class WC_Fedapay_Plugin
 
             add_action('admin_notices', array( $this, 'show_bootstrap_warning' ));
         }
+    }
+
+    /**
+     * Create table to store transactions made with FedaPay
+     */
+
+    public function createTables() {
+
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "fedapay_orders_transactions";
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name (
+		fedapay_orders_transactions_id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+		transaction_id int(11) NOT NULL,
+		order_id int(11) NOT NULL,
+		hash varchar(255) NOT NULL,
+		created_at DATETIME NOT NULL,
+		PRIMARY KEY  (fedapay_orders_transactions_id),
+		KEY order_id (order_id),
+		KEY transaction_id (transaction_id)
+	) $charset_collate;";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+
     }
 
     /**
