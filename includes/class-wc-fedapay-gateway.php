@@ -61,7 +61,10 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         add_action('woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ));
     }
-
+    
+    /**
+     * Set WC_Fedapay_Gateway icon variable
+     */
     private function set_icon()
     {
         if (filter_var( $this->icon_url, FILTER_VALIDATE_URL ) !== false) {
