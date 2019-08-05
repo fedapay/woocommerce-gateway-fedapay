@@ -26,6 +26,7 @@ phpcs.xml
 phpcs.xml.dist
 README.md
 wp-cli.local.yml
+deploy/*
 yarn.lock
 tests
 vendor

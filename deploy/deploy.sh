@@ -3,11 +3,8 @@
 # 1. Clone complete SVN repository to separate directory
 svn co $SVN_REPOSITORY ../svn
 
-ls vendor/fedapay-php/lib
-
 # 2. Copy git repository contents to SNV trunk/ directory
 cp -R ./* ../svn/trunk/
-ls ../svn/trunk/vendor/fedapay-php/lib
 
 # 3. Move assets/ to SVN /assets/
 mv ./wordpress_org_assets/ ../svn/assets/
@@ -25,7 +22,14 @@ cd ../
 # 7. Create SVN tag
 svn cp trunk tags/$TRAVIS_TAG
 
-ls tags/$TRAVIS_TAG/vendor/fedapay-php/lib
+svn stat
+
+# Add new files to SVN
+svn stat | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
+# Remove deleted files from SVN
+svn stat | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
+
+svn stat svn
 
 # 8. Push SVN tag
 #svn ci  --message "Release $TRAVIS_TAG" \
