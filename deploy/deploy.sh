@@ -10,12 +10,11 @@ cp -R ./* ../svn/trunk/
 cd ../svn/trunk/
 
 # 4. Move assets/ to SVN /assets/
-mv ./assets/ ../assets/
+mv ./wordpress_org_assets/ ../svn/assets/
 
 # 5. Clean up unnecessary files
 rm -rf .git/
 rm -rf deploy/
-rm .travis.yml
 
 # 6. Go to SVN repository root
 cd ../
