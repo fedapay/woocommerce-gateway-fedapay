@@ -31,4 +31,4 @@ svn stat $SVN_DIR
 svn ci  --message "Release $TRAVIS_TAG" \
         --username $SVN_USERNAME \
         --password $SVN_PASSWORD \
-        --non-interactive
+        --non-interactive $SVN_DIR
