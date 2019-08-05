@@ -23,7 +23,6 @@ deploy:
 # Deployment script requires few enviromnet variables
 env:
   global:
-  - SVN_REPOSITORY={PLUGIN SVN REPOSITORY URL}
-  - secure: {ENCRYPTED SVN ACCOUNT USERNAME}
-  - secure: {ENCRYPTED SVN ACCOUNT PASSWORD}
-  
+  - SVN_REPOSITORY=http://plugins.svn.wordpress.org/woo-gateway-fedapay
+  - secure: "ilrQ08Ffc7QRxEO/9/Oe0dEG5iC48Kayi/ZGv+mALsrvO75O4xyuin3lV+pvrtiR931PPPYORs/YoYC5vmHtlTG/TDVpHN4uRQg8km28hb6CYfNe+YGb7qp9xF36SM7h3bDe9sPV3w7i3EVsbSnLTyKJjcEQ8+O0dNtweXzUjNNVdF7z3g26syxU1d+8F79dfq4dw/LYh4kc/jybSOpJ4efW46fRBkzyGj4WVPqc5Dkk1AiqD9gRovcAatG1D/IatzsL3M1k3CBiuqrseL6yra70Nio8bdMJvhW1/19l4hZiBlkccgzMgPfmMuv2/6yBOk9M2M/jX6ffT71hC1BBXuXVEEnFp87Z2+n5hdxWgd5iL4C2zEFUyxfl/vtqmMKnfQZFKYfWz3dyferiWUm+81TIe1ZTKwbQdzkCgtU01e2p+ludjs8x79Sjt1cHz9zPdloD7KQ/bCro3rvpX+Mmxvv0WTfY5QeyANGUGV3szDLMTbCoaZlFXt+BEFSpk5rZlC5/y1IiEg6E0+BJWNJQkl8ASY7S161IylwH8ld2QmkVAktnzST8jzceEQCg+wfj+YSJaiRFcBsIddqLmz0Pqa/lzfcczd5ImjdGQCNDsWgxACFplH9ohm6CYWhYwo3RUaBTRHoc+WnGdxQweYbuJHkZjYijB+GW5jJFLCUnhFc="
+  - secure: "lawjvjExOnKPpdfnwgs7N5QqtI3q3f2cdL9P5m/nli2moLqvdZEJ9SeD+ysfuUiFLSbCqB/fb/OgAVmPo0SganstRcXaADCqUlPZ9Fn/djIbq1I/fUf9o7Kh3/DUvPZSRryua/9OI7WoSx9L0O0+Ehob/dXQ21G9z2EwE/OW22CXUA18epC+99Tb8/sNOLFP/94oxuFlSDGdwkl8enTixYdaq9pBUD2bqsofEpcqYvTWKWHv7CLuik2z7FY58iDFQSJWnmx9Yojp3/1vT8eCtZzfTG/Z7HhGuoIYlNZN6YI9f/vxLOEV88A4zmjkQ9dzJ9Avg+yZgGhzz9/8lHrQf9wGnYs8uAZKLwXOHYYcW/iTtJtCbnf0pyeQKpa+3/NQKaES0cVODylkpbowJxSGu2m/eVbF3gY+KMtAaFAS7/LjD8eGnCyRQlnBttebGUL4lKh4lBdmN+7xdwkBCQ0aRramTsDS2GLd0ie4uboqsXVEOq4BA9RCuPKCnvy3+SjxEMt6izvpL1zVLcUXj4mrsa1r+S1lsFa1l37F9wA9A6pvAa37m+jW6Quq7Pmntt0/+beacPUIwXuWiIGFYKIC9CZ3hUkEPSTJlngXFJt3LcavPYHhk1lkuo43a2Ps+69TpBIwAldgICuvyUbt/TvxxZxpO7xI1JzJh93sP8j8gdc="
