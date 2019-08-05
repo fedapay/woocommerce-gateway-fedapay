@@ -1,5 +1,8 @@
 *** Changelog ***
 
+= 0.1.5 2019-08-05 =
+* Fix - Fix travis deployment script
+
 = 0.1.4 2019-08-05 =
 * Fix - Add checkout icon url setting
 * Fix - Fix callback security issue
