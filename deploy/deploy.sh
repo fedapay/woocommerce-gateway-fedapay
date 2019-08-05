@@ -6,11 +6,11 @@ svn co $SVN_REPOSITORY ../svn
 # 2. Copy git repository contents to SNV trunk/ directory
 cp -R ./* ../svn/trunk/
 
-# 3. Switch to SVN repository
-cd ../svn/trunk/
-
-# 4. Move assets/ to SVN /assets/
+# 3. Move assets/ to SVN /assets/
 mv ./wordpress_org_assets/ ../svn/assets/
+
+# 4. Switch to SVN repository
+cd ../svn/trunk/
 
 # 5. Clean up unnecessary files
 rm -rf .git/
