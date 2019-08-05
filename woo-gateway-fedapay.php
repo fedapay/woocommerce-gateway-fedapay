@@ -13,7 +13,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: woo-gateway-fedapay
  * Domain Path: /languages
- * Version: 0.1.3
+ * Version: 0.1.4
  *
  */
 
@@ -21,9 +21,9 @@ if (! defined('ABSPATH') ) {
     exit;
 }
 
-define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.1.2' );
+define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.1.4' );
 
-if (! class_exists('WC_Fedapay_Gateway')) {
+if (! class_exists('WC_Fedapay_Plugin')) {
 
     require_once(plugin_dir_path(__FILE__) . 'includes/class-wc-fedapay-plugin.php');
 

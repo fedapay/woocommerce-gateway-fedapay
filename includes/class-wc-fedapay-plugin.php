@@ -82,9 +82,16 @@ class WC_Fedapay_Plugin
     public function init()
     {
         // Bootstrap
+        add_action('plugins_loaded', array( $this, 'wc_fedapay_update_db_check' ));
         add_action('plugins_loaded', array( $this, 'bootstrap' ));
-        add_action('plugins_loaded', array( $this, 'createTables' ));
         add_action('wp_ajax_wc_fedapay_gateway_dismiss_notice_message', array( $this, 'ajax_dismiss_notice' ));
+    }
+
+    public function wc_fedapay_update_db_check()
+    {
+        if ( get_site_option( 'wc_fedapay_db_version' ) != WC_FEDAPAY_GATEWAY_VERSION ) {
+            $this->install();
+        }
     }
 
     /**
@@ -111,31 +118,32 @@ class WC_Fedapay_Plugin
      * Create table to store transactions made with FedaPay
      */
 
-    public function createTables() {
-
+    public function install()
+    {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . "fedapay_orders_transactions";
+        $table_name = $wpdb->prefix . 'wc_fedapay_orders_transactions';
 
         $charset_collate = $wpdb->get_charset_collate();
 
-        $sql = "CREATE TABLE $table_name (
-		fedapay_orders_transactions_id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-		transaction_id int(11) NOT NULL,
-		order_id int(11) NOT NULL,
-		hash varchar(255) NOT NULL,
-		created_at DATETIME NOT NULL,
-		PRIMARY KEY  (fedapay_orders_transactions_id),
-		KEY order_id (order_id),
-		KEY transaction_id (transaction_id)
-	) $charset_collate;";
+        $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
+            fedapay_orders_transactions_id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            transaction_id int(11) NOT NULL,
+            order_id int(11) NOT NULL,
+            hash varchar(255) NOT NULL,
+            created_at DATETIME NOT NULL,
+            PRIMARY KEY  (fedapay_orders_transactions_id),
+            KEY order_id (order_id),
+            KEY transaction_id (transaction_id)
+        ) $charset_collate;";
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         dbDelta( $sql );
 
+        add_option( 'wc_fedapay_db_version', WC_FEDAPAY_GATEWAY_VERSION );
     }
 
     /**
-     * Add FedaPay Gateway to the liste of WooCommerce gateways
+     * Add FedaPay Gateway to the list of WooCommerce gateways
      */
     public function add_fedapay_gateway_class($gateways)
     {
