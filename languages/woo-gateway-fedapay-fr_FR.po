@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce FedaPay Gateway 0.1.1\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2018-10-10 15:20+0100\n"
+"POT-Creation-Date: 2019-08-05 14:26+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Fedapay Team <translations@fedapay.com>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: includes/class-wc-fedapay-gateway.php:24
@@ -31,7 +31,26 @@ msgstr "Procéder au paiement"
 msgid "Fedapay Payment Gateway Plug-in for WooCommerce"
 msgstr "Plug-in de passerelle de paiement Fedapay pour WooCommerce"
 
-#: includes/class-wc-fedapay-gateway.php:140
+#: includes/class-wc-fedapay-gateway.php:100
+#, php-format
+msgid ""
+"<strong>%s</strong> does not support the currency you are currently using. "
+"Please set the currency of your shop on XOF (FCFA) <a href=\"%s\">here.</a>"
+msgstr ""
+"<strong>%s</strong> ne prend pas en charge la devise que vous utilisez "
+"actuellement. S'il vous plaît définir la monnaie de votre boutique sur XOF "
+"(FCFA) <a href=\"%s\">ici.</a>"
+
+#: includes/class-wc-fedapay-gateway.php:169
+#, php-format
+msgid ""
+"%s only supports XOF as currency for now. Please select XOF currrency or "
+"contact the store manager."
+msgstr ""
+"%s ne prend en charge XOF comme monnaie pour l'instant. S'il vous plaît "
+"sélectionner la devise XOF ou contacter l’administrateur de la boutique."
+
+#: includes/class-wc-fedapay-gateway.php:204
 #, php-format
 msgid ""
 "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL "
@@ -44,49 +63,49 @@ msgstr ""
 "certificat SSL valide et que vous < a href = \" %s\" > forcez les pages de "
 "Checkout à être sécurisées. </a>"
 
-#: includes/class-wc-fedapay-gateway.php:163
-msgid "Transaction completed successfully"
-msgstr "Transaction terminée avec succès"
-
-#: includes/class-wc-fedapay-gateway.php:164
-msgid "Hey, the order has been completed. Thanks!"
-msgstr "La commande est terminée. Merci!"
-
-#: includes/class-wc-fedapay-gateway.php:170
-msgid "Hey, the order has been cancelled. Try again!"
-msgstr "La commande a été annulée. Réessayez!"
-
-#: includes/class-wc-fedapay-gateway.php:171
-msgid "Transaction has been cancelled: Try again!"
-msgstr "La transaction a été annulée: réessayez!"
-
-#: includes/class-wc-fedapay-gateway.php:177
-msgid "Hey, the order payment failed. Try again!"
-msgstr "La commande a été annulée. Réessayez!"
-
-#: includes/class-wc-fedapay-gateway.php:178
-msgid "Transaction failed: Try again!"
-msgstr "Échec de la transaction: réessayez!"
-
-#: includes/class-wc-fedapay-gateway.php:195
+#: includes/class-wc-fedapay-gateway.php:266
 msgid "Payment error: "
 msgstr "Erreur de paiement: "
 
-#: includes/class-wc-fedapay-gateway.php:200
+#: includes/class-wc-fedapay-gateway.php:271
 msgid " "
 msgstr " "
 
-#: includes/class-wc-fedapay-plugin.php:115
+#: includes/class-wc-fedapay-gateway.php:285
+msgid "Transaction completed successfully"
+msgstr "Transaction terminée avec succès"
+
+#: includes/class-wc-fedapay-gateway.php:286
+msgid "Hey, the order has been completed. Thanks!"
+msgstr "La commande est terminée. Merci!"
+
+#: includes/class-wc-fedapay-gateway.php:291
+msgid "Hey, the order has been cancelled. Try again!"
+msgstr "La commande a été annulée. Réessayez!"
+
+#: includes/class-wc-fedapay-gateway.php:292
+msgid "Transaction has been cancelled: Try again!"
+msgstr "La transaction a été annulée: réessayez!"
+
+#: includes/class-wc-fedapay-gateway.php:295
+msgid "Hey, the order payment failed. Try again!"
+msgstr "La commande a été annulée. Réessayez!"
+
+#: includes/class-wc-fedapay-gateway.php:296
+msgid "Transaction failed: Try again!"
+msgstr "Échec de la transaction: réessayez!"
+
+#: includes/class-wc-fedapay-plugin.php:67
 msgid "WooCommerce FedaPay Gateway requires WooCommerce to be activated"
 msgstr "WooCommerce FedaPay Gateway requiert l’activation de WooCommerce"
 
-#: includes/class-wc-fedapay-plugin.php:119
+#: includes/class-wc-fedapay-plugin.php:71
 msgid "WooCommerce FedaPay Gateway requires WooCommerce version 2.5 or greater"
 msgstr ""
 "WooCommerce FedaPay Gateway requiert la version 2.5 ou supérieur de "
 "WooCommerce"
 
-#: includes/class-wc-fedapay-plugin.php:123
+#: includes/class-wc-fedapay-plugin.php:75
 msgid ""
 "WooCommerce FedaPay Gateway requires cURL to be installed on your server"
 msgstr "WooCommerce FedaPay Gateway requiert que cURL soit installé"
@@ -173,8 +192,8 @@ msgstr ""
 msgid "Fedapay Live Secret Key"
 msgstr "Fedapay clé secrète Live"
 
-#. Description of the plugin
-msgid "Take credit card and mobile money payments on your store using Fedapay."
-msgstr ""
-"Acceptez des paiements par carte de crédit et mobile money dans votre "
-"boutique en ligne à l’aide de Fedapay."
+#~ msgid ""
+#~ "Take credit card and mobile money payments on your store using Fedapay."
+#~ msgstr ""
+#~ "Acceptez des paiements par carte de crédit et mobile money dans votre "
+#~ "boutique en ligne à l’aide de Fedapay."
