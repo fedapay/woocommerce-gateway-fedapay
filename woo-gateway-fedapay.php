@@ -23,10 +23,17 @@ if (! defined('ABSPATH') ) {
 
 define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.1.4' );
 
-if (! class_exists('WC_Fedapay_Plugin')) {
+function wc_fedapay_gateway() {
+    static $plugin;
 
-    require_once(plugin_dir_path(__FILE__) . 'includes/class-wc-fedapay-plugin.php');
+    if ( ! isset( $plugin ) ) {
+        require_once(plugin_dir_path(__FILE__) . 'includes/class-wc-fedapay-plugin.php');
 
-    $plugin = new WC_Fedapay_Plugin( __FILE__, WC_FEDAPAY_GATEWAY_VERSION );
-    $plugin->init();
+        $plugin = new WC_Fedapay_Plugin( __FILE__, WC_FEDAPAY_GATEWAY_VERSION );
+        $plugin->init();
+    }
+
+    return $plugin;
 }
+
+wc_fedapay_gateway()->init();

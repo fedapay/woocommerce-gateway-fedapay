@@ -26,6 +26,13 @@ class WC_Fedapay_Plugin
     public $version;
 
     /**
+     * Plugin url.
+     *
+     * @var string
+     */
+    public $plugin_url;
+
+    /**
      * Notice .
      *
      * @var string
@@ -36,6 +43,8 @@ class WC_Fedapay_Plugin
     {
         $this->file = $file;
         $this->version = $version;
+
+        $this->plugin_url = trailingslashit( plugin_dir_url( $this->file ) );
     }
 
     /**

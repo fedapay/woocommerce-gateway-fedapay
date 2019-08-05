@@ -13,12 +13,12 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 {
     /**
      * Protected constructor to prevent creating a new instance of the
-    * *Singleton* via the `new` operator from outside of this class.
-    */
+     * *Singleton* via the `new` operator from outside of this class.
+     */
     public function __construct()
     {
         $this->id = 'woo_gateway_fedapay';
-        $this->icon = plugins_url('../assets/img/fedapay.svg', __FILE__) ;
+        //$this->icon = plugins_url('../assets/img/fedapay.svg', __FILE__) ;
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Fedapay Gateway';
         $this->order_button_text = __('Continue to payment', 'woo-gateway-fedapay');
@@ -35,11 +35,16 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         // Load the settings.
         $this->init_settings();
 
+        if (empty($this->settings['icon_url'])) {
+            $this->update_option('icon_url', plugins_url('../assets/img/fedapay.svg', __FILE__));
+        }
 
         // Turn these settings into variables we can use
         foreach ($this->settings as $setting_key => $value) {
             $this->$setting_key = $value;
         }
+
+        $this->set_icon();
 
         // Setup FedaPay SDK
         $this->setupFedaPaySdk($this->testmode, $this->fedapay_testsecretkey, $this->fedapay_livesecretkey);
@@ -50,11 +55,35 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         // Save settings
         if (is_admin()) {
-            add_action('woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ));
+            add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         }
 
         add_action('woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ));
     }
+
+    private function set_icon()
+    {
+        if (filter_var( $this->icon_url, FILTER_VALIDATE_URL ) !== false) {
+            $this->icon = $this->icon_url;
+        } else {
+            $this->icon = wp_get_attachment_url( $this->icon_url );
+        }
+    }
+
+    /**
+     * Enqueues admin scripts.
+     *
+     * @since 1.5.2
+     */
+    public function enqueue_scripts()
+    {
+        // Image upload.
+        wp_enqueue_media();
+
+        wp_enqueue_script( 'wc-fedapay-gateway-settings', wc_fedapay_gateway()->plugin_url . 'assets/js/wc-fedapay-gateway-settings.js', array( 'jquery' ), wc_fedapay_gateway()->version, true );
+    }
+
 
     /**
      * Init fedapay sdk
@@ -296,5 +325,95 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                 wc_add_notice(__('Transaction failed: Try again!', 'woo-gateway-fedapay'), 'error');
                 break;
         }
+    }
+
+
+    /**
+     * Generate Image HTML.
+     *
+     * @param  mixed $key
+     * @param  mixed $data
+     * @since  1.5.0
+     * @return string
+     */
+    public function generate_image_html( $key, $data ) {
+        $field_key = $this->get_field_key( $key );
+        $defaults  = array(
+            'title'             => '',
+            'disabled'          => false,
+            'class'             => '',
+            'css'               => '',
+            'placeholder'       => '',
+            'type'              => 'text',
+            'desc_tip'          => false,
+            'description'       => '',
+            'custom_attributes' => array(),
+        );
+
+        $data  = wp_parse_args( $data, $defaults );
+        $value = $this->get_option( $key );
+
+        // Hide show add remove buttons.
+        $maybe_hide_add_style    = '';
+        $maybe_hide_remove_style = '';
+
+        // For backwards compatibility (customers that already have set a url)
+        $value_is_url            = filter_var( $value, FILTER_VALIDATE_URL ) !== false;
+
+        if ( empty( $value ) || $value_is_url ) {
+            $maybe_hide_remove_style = 'display: none;';
+        } else {
+            $maybe_hide_add_style = 'display: none;';
+        }
+
+        ob_start();
+        ?>
+        <tr valign="top">
+            <th scope="row" class="titledesc">
+                <label for="<?php echo esc_attr( $field_key ); ?>"><?php echo wp_kses_post( $data['title'] ); ?> <?php echo $this->get_tooltip_html( $data ); ?></label>
+            </th>
+
+            <td class="image-component-wrapper">
+                <div class="image-preview-wrapper">
+                    <?php
+                    if ( ! $value_is_url ) {
+                        echo wp_get_attachment_image( $value, 'thumbnail' );
+                    } else {
+                    ?>
+                        <img src="<?php echo $value  ?>" />
+                    <?php
+                    }
+                    ?>
+                </div>
+
+                <button
+                    class="button wc_fedapay_gateway_image_upload"
+                    data-field-id="<?php echo esc_attr( $field_key ); ?>"
+                    data-media-frame-title="<?php echo esc_attr( __( 'Select a image to upload', 'woo-gateway-fedapay' ) ); ?>"
+                    data-media-frame-button="<?php echo esc_attr( __( 'Use this image', 'woo-gateway-fedapay' ) ); ?>"
+                    data-add-image-text="<?php echo esc_attr( __( 'Add image', 'woo-gateway-fedapay' ) ); ?>"
+                    style="<?php echo esc_attr( $maybe_hide_add_style ); ?>"
+                >
+                    <?php echo esc_html__( 'Add image', 'woo-gateway-fedapay' ); ?>
+                </button>
+
+                <button
+                    class="button wc_fedapay_gateway_image_remove"
+                    data-field-id="<?php echo esc_attr( $field_key ); ?>"
+                    style="<?php echo esc_attr( $maybe_hide_remove_style ); ?>"
+                >
+                    <?php echo esc_html__( 'Remove image', 'woo-gateway-fedapay' ); ?>
+                </button>
+
+                <input type="hidden"
+                    name="<?php echo esc_attr( $field_key ); ?>"
+                    id="<?php echo esc_attr( $field_key ); ?>"
+                    value="<?php echo esc_attr( $value ); ?>"
+                />
+            </td>
+        </tr>
+        <?php
+
+        return ob_get_clean();
     }
 }

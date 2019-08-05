@@ -27,6 +27,14 @@ return array(
         'description' => __('This controls the description which the user sees during checkout.', 'woo-gateway-fedapay'),
         'default'     => __("Pay via Fedapay; you can pay with your credit card or MTN Mobile Money", 'woo-gateway-fedapay'),
     ),
+    'icon_url' => array(
+        'title'       => __( 'Logo Image (190×60)', 'woo-gateway-fedapay' ),
+        'type'        => 'image',
+        'description' => __( 'If you want FedaPay to co-brand the checkout page with your logo, enter the URL of your logo image here.<br/>The image must be no larger than 190x60, GIF, PNG, or JPG format, and should be served over HTTPS.', 'woo-gateway-fedapay' ),
+        'default'     => '',
+        'desc_tip'    => true,
+        'placeholder' => __( 'Optional', 'woo-gateway-fedapay' ),
+    ),
     'testmode'              => array(
         'title'       => __('Fedapay sandbox', 'woo-gateway-fedapay'),
         'type'        => 'checkbox',
