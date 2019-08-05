@@ -166,7 +166,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $order_number = strtoupper($order_number);
 
         if ($order->currency !== 'XOF') {
-            wc_add_notice( sprintf( __( "%s ne supporte que le XOF comme devise actuellement. Veuillez bien selectionner le XOF (FCFA) ou contacter l'administrateur de la boutique.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
+            wc_add_notice( sprintf( __( "%s only supports XOF as curency for now. Please select XOF currrency or contact the store manager.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
         }
 
         try {
