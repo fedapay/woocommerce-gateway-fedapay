@@ -3,30 +3,26 @@
 # 1. Clone complete SVN repository to separate directory
 svn co $SVN_REPOSITORY ../svn
 
-# 2. Move assets/ to SVN /assets/
-mv ./wordpress_org_assets/ ../svn/assets/
+# 2. Update SVN assets/ folder
+rsync -r -p ./wordpress_org_assets/* ../svn/assets
 
-# 3. Copy git repository contents to SNV trunk/ directory
-cp -R ./* ../svn/trunk/
-
-# 4. Switch to SVN repository
-cd ../svn/trunk/
-
-# 5. Clean up unnecessary files
-rm -rf .git/
-rm -rf deploy/
-
-# 6. Go to SVN repository root
-cd ../
-
-# 7. Create SVN tag
-svn cp trunk tags/$TRAVIS_TAG
+# 3. Clean up unnecessary files
+rm -rf wordpress_org_assets/ deploy/ .git/
 
 svn stat
 
-# Add new files to SVN
+# 4. Copy git repository contents to SNV trunk/ directory
+rsync -r -p ./* ../svn/trunk/
+
+# 5. Create SVN tag
+mkdir ../svn/tags/$TRAVIS_TAG
+rsync -r -p $PLUGIN/* ../svn/tags/$TRAVIS_TAG
+
+svn stat
+
+# 6. Add new files to SVN
 svn stat | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
-# Remove deleted files from SVN
+# 7. Remove deleted files from SVN
 svn stat | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 
 svn stat svn
