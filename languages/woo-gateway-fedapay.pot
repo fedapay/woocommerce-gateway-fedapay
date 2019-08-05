@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-08-05T12:47:57+00:00\n"
+"POT-Creation-Date: 2019-08-05T13:04:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: woo-gateway-fedapay\n"
@@ -108,7 +108,7 @@ msgid "Fedapay Payment Gateway Plug-in for WooCommerce"
 msgstr ""
 
 #: includes/class-wc-fedapay-gateway.php:100
-msgid "<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href=\""
+msgid "<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href=\"%s\">here.</a>"
 msgstr ""
 
 #: includes/class-wc-fedapay-gateway.php:169
@@ -116,7 +116,7 @@ msgid "%s ne supporte que le XOF comme devise actuellement. Veuillez bien select
 msgstr ""
 
 #: includes/class-wc-fedapay-gateway.php:204
-msgid "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href=\""
+msgid "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href=\"%s\">forcing the checkout pages to be secured.</a>"
 msgstr ""
 
 #: includes/class-wc-fedapay-gateway.php:266

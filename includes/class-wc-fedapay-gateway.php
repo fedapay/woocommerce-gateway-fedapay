@@ -97,7 +97,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $currency = get_woocommerce_currency();
 
         if ($currency != 'XOF') {
-            echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href="' . admin_url('admin.php?page=wc-settings&tab=general') . '">here.</a>', 'woo-gateway-fedapay'), $this->method_title),"</p></div>";
+            echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href="%s">here.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=general')),"</p></div>";
         }
     }
 
@@ -201,7 +201,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         if ($this->enabled == "yes") {
             if (get_option('woocommerce_force_ssl_checkout') == "no") {
-                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="' . admin_url('admin.php?page=wc-settings&tab=advanced') . '">forcing the checkout pages to be secured.</a>', 'woo-gateway-fedapay'), $this->method_title) ."</p></div>";
+                echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=advanced')) ."</p></div>";
             }
         }
     }
@@ -273,7 +273,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
             }
         }
     }
-    
+
     /**
      * Update order status
      */
