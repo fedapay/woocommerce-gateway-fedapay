@@ -28,7 +28,7 @@ ls -l $SVN_DIR
 svn stat $SVN_DIR
 
 # 8. Push SVN tag
-#svn ci  --message "Release $TRAVIS_TAG" \
-#        --username $SVN_USERNAME \
-#        --password $SVN_PASSWORD \
-#        --non-interactive
+svn ci  --message "Release $TRAVIS_TAG" \
+        --username $SVN_USERNAME \
+        --password $SVN_PASSWORD \
+        --non-interactive
