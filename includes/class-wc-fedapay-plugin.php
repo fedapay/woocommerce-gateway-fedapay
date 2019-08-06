@@ -93,6 +93,8 @@ class WC_Fedapay_Plugin
         // Bootstrap
         add_action('plugins_loaded', array( $this, 'wc_fedapay_update_db_check' ));
         add_action('plugins_loaded', array( $this, 'bootstrap' ));
+        add_filter( 'plugin_action_links_' . plugin_basename( $this->file ), array( $this, 'plugin_action_links' ) );
+
         add_action('wp_ajax_wc_fedapay_gateway_dismiss_notice_message', array( $this, 'ajax_dismiss_notice' ));
     }
 
@@ -207,5 +209,36 @@ class WC_Fedapay_Plugin
                 break;
         }
         wp_die();
+    }
+
+
+    /**
+     * Add relevant links to plugins page.
+     *
+     * @since 1.2.0
+     *
+     * @param array $links Plugin action links
+     *
+     * @return array Plugin action links
+     */
+    public function plugin_action_links( $links ) {
+        $plugin_links = array();
+
+        if ( function_exists( 'WC' ) ) {
+            $setting_url = $this->get_admin_setting_link();
+            $plugin_links[] = '<a href="' . esc_url( $setting_url ) . '">' . esc_html__( 'Settings', 'woo-gateway-fedapay' ) . '</a>';
+        }
+
+        $plugin_links[] = '<a href="https://docs.fedapay.com/plugins/woocommerce" target="_blank">' . esc_html__( 'Docs', 'woo-gateway-fedapay' ) . '</a>';
+
+        return array_merge( $plugin_links, $links );
+    }
+
+
+    /**
+     * Link to settings screen.
+     */
+    public function get_admin_setting_link() {
+        return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woo_gateway_fedapay' );
     }
 }
