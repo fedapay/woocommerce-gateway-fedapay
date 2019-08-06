@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce FedaPay Gateway 0.1.1\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-08-06 16:01+0100\n"
+"POT-Creation-Date: 2019-08-06 16:11+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Fedapay Team <translations@fedapay.com>\n"
@@ -96,8 +96,8 @@ msgid "Transaction failed: Try again!"
 msgstr "Échec de la transaction: réessayez!"
 
 #: includes/class-wc-fedapay-gateway.php:395
-msgid "Select a image to upload"
-msgstr ""
+msgid "Select an image to upload"
+msgstr "Sélectionner une image à téléverser"
 
 #: includes/class-wc-fedapay-gateway.php:396
 msgid "Use this image"
