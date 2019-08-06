@@ -74,6 +74,20 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.1.6 2019-08-06 =
+* Fix - Add setting and documentation link on plugins page
+* Fix - Review french translations
+* Fix - Remove ls from travis
+
+= 0.1.5 2019-08-05 =
+* Fix - Fix travis deployment script
+
+= 0.1.4 2019-08-05 =
+* Fix - Add checkout icon url setting
+* Fix - Fix callback security issue
+* Fix - Add notice for unsupported currencies
+* Fix - Add deployment script
+
 = 0.1.3 2019-02-25 =
 * Fix - Update checkout logo
 
