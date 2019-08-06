@@ -24,7 +24,6 @@ svn stat $SVN_DIR | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
 # 7. Remove deleted files from SVN
 svn stat $SVN_DIR | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 
-ls -l $SVN_DIR
 svn stat $SVN_DIR
 
 # 8. Push SVN tag

@@ -1,5 +1,10 @@
 *** Changelog ***
 
+= 0.1.6 2019-08-06 =
+* Fix - Add setting and documentation link on plugins page
+* Fix - Review french translations
+* Fix - Remove ls from travis
+
 = 0.1.5 2019-08-05 =
 * Fix - Fix travis deployment script
 
