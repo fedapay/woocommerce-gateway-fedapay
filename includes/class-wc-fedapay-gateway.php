@@ -392,7 +392,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                 <button
                     class="button wc_fedapay_gateway_image_upload"
                     data-field-id="<?php echo esc_attr( $field_key ); ?>"
-                    data-media-frame-title="<?php echo esc_attr( __( 'Select a image to upload', 'woo-gateway-fedapay' ) ); ?>"
+                    data-media-frame-title="<?php echo esc_attr( __( 'Select an image to upload', 'woo-gateway-fedapay' ) ); ?>"
                     data-media-frame-button="<?php echo esc_attr( __( 'Use this image', 'woo-gateway-fedapay' ) ); ?>"
                     data-add-image-text="<?php echo esc_attr( __( 'Add image', 'woo-gateway-fedapay' ) ); ?>"
                     style="<?php echo esc_attr( $maybe_hide_add_style ); ?>"
