@@ -221,7 +221,8 @@ class WC_Fedapay_Plugin
      *
      * @return array Plugin action links
      */
-    public function plugin_action_links( $links ) {
+    public function plugin_action_links( $links )
+    {
         $plugin_links = array();
 
         if ( function_exists( 'WC' ) ) {
@@ -238,7 +239,8 @@ class WC_Fedapay_Plugin
     /**
      * Link to settings screen.
      */
-    public function get_admin_setting_link() {
+    public function get_admin_setting_link()
+    {
         return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=woo_gateway_fedapay' );
     }
 }
