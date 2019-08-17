@@ -18,7 +18,6 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     public function __construct()
     {
         $this->id = 'woo_gateway_fedapay';
-        //$this->icon = plugins_url('../assets/img/fedapay.svg', __FILE__) ;
         $this->has_fields = false;
         $this->method_title = 'Woocommerce Fedapay Gateway';
         $this->order_button_text = __('Continue to payment', 'woo-gateway-fedapay');
@@ -61,17 +60,34 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         add_action('woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ));
     }
-    
+
     /**
      * Set WC_Fedapay_Gateway icon variable
      */
     private function set_icon()
     {
         if (filter_var( $this->icon_url, FILTER_VALIDATE_URL ) !== false) {
-            $this->icon = $this->icon_url;
+            $url = $this->icon_url;
         } else {
-            $this->icon = wp_get_attachment_url( $this->icon_url );
+            $url = wp_get_attachment_url( $this->icon_url );
         }
+
+        $this->icon = $this->append_url_version( $url );
+    }
+
+    /**
+     * Append version to a specific url
+     */
+    private function append_url_version($url)
+    {
+        $url = trim($url);
+        if (strpos($url, '?') === false) {
+            $url .= '?';
+        } else {
+            $url .= '&';
+        }
+
+        return $url .= 'v=' . wc_fedapay_gateway()->version;
     }
 
     /**
