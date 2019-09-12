@@ -1,5 +1,9 @@
 *** Changelog ***
 
+= 0.1.7 2019-08-17 =
+* Fix - Add version to icon URL
+* Fix - Test with Woocommerce 3.7.0
+
 = 0.1.6 2019-08-06 =
 * Fix - Add setting and documentation link on plugins page
 * Fix - Review french translations

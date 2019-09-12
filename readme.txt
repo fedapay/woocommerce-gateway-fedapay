@@ -4,7 +4,7 @@ Tags: credit card, fedapay, mtn mobile money, woocommerce
 Requires at least: 4.5
 Tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 0.1.6
+Stable tag: 0.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,8 @@ The FedaPay plugin extends WooCommerce allowing you to take payments directly on
 FedaPay is available in:
 
 * Benin
+* Ivory Coast
+* Togo
 
 = Why choose FedaPay? =
 
@@ -73,6 +75,10 @@ If you get stuck, you can ask for help in the Plugin Forum.
 5. Choose payment mode.
 
 == Changelog ==
+
+= 0.1.7 2019-08-17 =
+* Fix - Add version to icon URL
+* Fix - Test with Woocommerce 3.7.0
 
 = 0.1.6 2019-08-06 =
 * Fix - Add setting and documentation link on plugins page
