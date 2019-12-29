@@ -1,5 +1,9 @@
 *** Changelog ***
 
+= 0.2.0 2019-12-28 =
+* Fix - Fix FedaPay labels
+* Add - Add FedaPay Checkout modal feature
+
 = 0.1.7 2019-08-17 =
 * Fix - Add version to icon URL
 * Fix - Test with Woocommerce 3.7.0
