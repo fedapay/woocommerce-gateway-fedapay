@@ -19,9 +19,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         $this->id = 'woo_gateway_fedapay';
         $this->has_fields = false;
-        $this->method_title = 'Woocommerce Fedapay Gateway';
+        $this->method_title = __('FedaPay', 'woo-gateway-fedapay');
         $this->order_button_text = __('Continue to payment', 'woo-gateway-fedapay');
-        $this->method_description = __('Fedapay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
+        $this->method_description = __('FedaPay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
 
         $this->supports = ['products'];
 
@@ -55,10 +55,11 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         // Save settings
         if (is_admin()) {
             add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-            add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+            add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
         }
 
-        add_action('woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ));
+        add_action( 'woocommerce_api_'. strtolower(get_class($this)), array( $this, 'check_order_status' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'payment_scripts' ) );
     }
 
     /**
@@ -92,17 +93,32 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
     /**
      * Enqueues admin scripts.
-     *
-     * @since 1.5.2
      */
-    public function enqueue_scripts()
+    public function admin_scripts()
     {
         // Image upload.
         wp_enqueue_media();
 
-        wp_enqueue_script( 'wc-fedapay-gateway-settings', wc_fedapay_gateway()->plugin_url . 'assets/js/wc-fedapay-gateway-settings.js', array( 'jquery' ), wc_fedapay_gateway()->version, true );
+        wp_enqueue_script( 'woocommerce_fedapay_admin', wc_fedapay_gateway()->plugin_url . 'assets/js/wc-fedapay-admin.js', array( 'jquery' ), wc_fedapay_gateway()->version, true );
     }
 
+    /**
+     * Enqueues payment scripts.
+     */
+    public function payment_scripts()
+    {
+        $public_key = $this->testmode == 'yes' ? $this->fedapay_testpublickey : $this->fedapay_livepublickey;
+
+        $fedapay_params = array(
+            'public_key'    => $public_key,
+        );
+
+        wp_register_script( 'fedapay_checkout_js', 'https://cdn.fedapay.com/checkout.js', '', '1.1.2', true );
+        wp_register_script( 'woocommerce_fedapay', wc_fedapay_gateway()->plugin_url . 'assets/js/wc-fedapay.js', array( 'jquery', 'fedapay_checkout_js' ), wc_fedapay_gateway()->version, true );
+
+        wp_localize_script( 'woocommerce_fedapay', 'wc_fedapay_params', apply_filters( 'wc_fedapay_params', $fedapay_params ) );
+        wp_enqueue_script( 'woocommerce_fedapay' );
+    }
 
     /**
      * Init fedapay sdk
@@ -219,9 +235,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         try {
             $transaction = \FedaPay\Transaction::create(array(
-                'description' => 'Article '.$order_number,
+                'description' => 'Article '. $order_number,
                 'amount' => $amount,
-                'currency' => array('iso'=>$order->currency),
+                'currency' => array( 'iso' => $order->currency ),
                 'callback_url' => $callback_url,
                 'customer' => [
                     'firstname' => $firstname,
@@ -232,10 +248,12 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
             $this->addOrderTransaction($order_id, $transaction->id, $hash);
 
-            $token = $transaction->generateToken();
+            $modal_url = sprintf( '#fedapay-confirm-%s:%s', $transaction->id, rawurlencode( $callback_url ) );
+            $redirect_url = $this->checkoutmodale == 'yes' ? $modal_url : $transaction->generateToken()->url;
+            // TODO: implement checkout dialog
             return [
                 'result'   => 'success',
-                'redirect' => $token->url
+                'redirect' => $redirect_url
             ];
         } catch (\Exception $e) {
             $this->displayErrors($e);
@@ -327,7 +345,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
      */
     private function updateOrderStatus($order, $transaction_status = null)
     {
-        switch($transaction_status) {
+        switch ($transaction_status) {
             case 'approved':
                 $order->update_status('completed');
                 wc_add_notice(__('Transaction completed successfully', 'woo-gateway-fedapay'), 'success');

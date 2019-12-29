@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WooCommerce FedaPay Gateway plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce FedaPay Gateway 0.1.5\n"
+"Project-Id-Version: WooCommerce FedaPay Gateway 0.1.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-gateway-fedapay\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-08-06T15:09:00+00:00\n"
+"POT-Creation-Date: 2019-12-29T13:04:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: woo-gateway-fedapay\n"
@@ -27,7 +27,6 @@ msgid "Take credit card and mobile money payments on your store using Fedapay."
 msgstr ""
 
 #. Author of the plugin
-#: includes/settings-fedapay.php:20
 msgid "Fedapay"
 msgstr ""
 
@@ -40,7 +39,7 @@ msgid "Enable/Disable"
 msgstr ""
 
 #: includes/settings-fedapay.php:13
-msgid "Enable Fedapay"
+msgid "Enable FedaPay"
 msgstr ""
 
 #: includes/settings-fedapay.php:17
@@ -49,6 +48,10 @@ msgstr ""
 
 #: includes/settings-fedapay.php:19
 msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/settings-fedapay.php:20
+msgid "Mobile Money - Credit cards (FedaPay)"
 msgstr ""
 
 #: includes/settings-fedapay.php:24
@@ -60,7 +63,7 @@ msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
 #: includes/settings-fedapay.php:28
-msgid "Pay via Fedapay; you can pay with your credit card or MTN Mobile Money"
+msgid "Pay via FedaPay; you can pay with your credit card or Mobile Money"
 msgstr ""
 
 #: includes/settings-fedapay.php:31
@@ -76,103 +79,143 @@ msgid "Optional"
 msgstr ""
 
 #: includes/settings-fedapay.php:39
-msgid "Fedapay sandbox"
+msgid "FedaPay sandbox"
 msgstr ""
 
 #: includes/settings-fedapay.php:41
-msgid "Enable Fedapay sandbox"
+msgid "Enable FedaPay sandbox"
 msgstr ""
 
 #: includes/settings-fedapay.php:43
-msgid "Fedapay sandbox can be used to test payments. Sign up for a <a href=\"%s\">developer account</a>."
+msgid "FedaPay sandbox can be used to test payments. Sign up for a <a target=\"_blank\" href=\"%s\">developer account</a>."
 msgstr ""
 
 #: includes/settings-fedapay.php:46
-msgid "Test Secret Key"
+msgid "Test Public Key"
 msgstr ""
 
 #: includes/settings-fedapay.php:48
-msgid "This is the Test Secret Key found in API Keys in Account Dashboard."
+msgid "This is the Test public Key found in API Keys in Account Dashboard."
 msgstr ""
 
 #: includes/settings-fedapay.php:51
-msgid "Fedapay Test Secret Key"
+msgid "FedaPay Test Public Key"
 msgstr ""
 
 #: includes/settings-fedapay.php:54
-msgid "Live Secret Key"
+msgid "Live Public Key"
 msgstr ""
 
 #: includes/settings-fedapay.php:56
-msgid "This is the Live Secret Key found in API Keys in Account Dashboard."
+msgid "This is the Live Public Key found in API Keys in Account Dashboard."
 msgstr ""
 
 #: includes/settings-fedapay.php:59
-msgid "Fedapay Live Secret Key"
+msgid "FedaPay Live Public Key"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:24
+#: includes/settings-fedapay.php:62
+msgid "Test Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:64
+msgid "This is the Test Secret Key found in API Keys in Account Dashboard."
+msgstr ""
+
+#: includes/settings-fedapay.php:67
+msgid "FedaPay Test Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:70
+msgid "Live Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:72
+msgid "This is the Live Secret Key found in API Keys in Account Dashboard."
+msgstr ""
+
+#: includes/settings-fedapay.php:75
+msgid "FedaPay Live Secret Key"
+msgstr ""
+
+#: includes/settings-fedapay.php:78
+msgid "Payment modal"
+msgstr ""
+
+#: includes/settings-fedapay.php:80
+msgid "Enable payment modal"
+msgstr ""
+
+#: includes/settings-fedapay.php:82
+msgid "If enabled, a payment modal will open instead of redirecting the user. Warning! This operation needs you to connect your website to FedaPay Checkout. <a target=\"_blank\" href=\"%s\">Learn more</a>"
+msgstr ""
+
+#: includes/class-wc-fedapay-gateway.php:22
+msgid "FedaPay"
+msgstr ""
+
+#: includes/class-wc-fedapay-gateway.php:23
 msgid "Continue to payment"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:25
-msgid "Fedapay Payment Gateway Plug-in for WooCommerce"
+#: includes/class-wc-fedapay-gateway.php:24
+msgid "FedaPay Payment Gateway Plug-in for WooCommerce"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:132
+#: includes/class-wc-fedapay-gateway.php:164
 msgid "<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href=\"%s\">here.</a>"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:201
+#: includes/class-wc-fedapay-gateway.php:233
 msgid "%s only supports XOF as currency for now. Please select XOF currrency or contact the store manager."
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:236
+#: includes/class-wc-fedapay-gateway.php:270
 msgid "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href=\"%s\">forcing the checkout pages to be secured.</a>"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:298
+#: includes/class-wc-fedapay-gateway.php:332
 msgid "Payment error: "
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:317
+#: includes/class-wc-fedapay-gateway.php:351
 msgid "Transaction completed successfully"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:318
+#: includes/class-wc-fedapay-gateway.php:352
 msgid "Hey, the order has been completed. Thanks!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:323
+#: includes/class-wc-fedapay-gateway.php:357
 msgid "Hey, the order has been cancelled. Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:324
+#: includes/class-wc-fedapay-gateway.php:358
 msgid "Transaction has been cancelled: Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:327
+#: includes/class-wc-fedapay-gateway.php:361
 msgid "Hey, the order payment failed. Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:328
+#: includes/class-wc-fedapay-gateway.php:362
 msgid "Transaction failed: Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:395
+#: includes/class-wc-fedapay-gateway.php:429
 msgid "Select an image to upload"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:396
+#: includes/class-wc-fedapay-gateway.php:430
 msgid "Use this image"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:397
-#: includes/class-wc-fedapay-gateway.php:400
+#: includes/class-wc-fedapay-gateway.php:431
+#: includes/class-wc-fedapay-gateway.php:434
 msgid "Add image"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:408
+#: includes/class-wc-fedapay-gateway.php:442
 msgid "Remove image"
 msgstr ""
 
@@ -188,10 +231,10 @@ msgstr ""
 msgid "WooCommerce FedaPay Gateway requires cURL to be installed on your server"
 msgstr ""
 
-#: includes/class-wc-fedapay-plugin.php:229
+#: includes/class-wc-fedapay-plugin.php:230
 msgid "Settings"
 msgstr ""
 
-#: includes/class-wc-fedapay-plugin.php:232
+#: includes/class-wc-fedapay-plugin.php:233
 msgid "Docs"
 msgstr ""
