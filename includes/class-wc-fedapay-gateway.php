@@ -230,7 +230,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $order_number = strtoupper($order_number);
 
         if ($order->currency !== 'XOF') {
-            wc_add_notice( sprintf( __( "%s only supports XOF as currency for now. Please select XOF currency or contact the store manager.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
+            wc_add_notice( sprintf( __( "%s only supports XOF as currency for now. Please select XOF currrency or contact the store manager.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
         }
 
         try {
@@ -248,12 +248,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
             $this->addOrderTransaction($order_id, $transaction->id, $hash);
 
-            $modal_url = sprintf( '#fedapay-confirm-%s:%s', $transaction->id, rawurlencode( $callback_url ) );
-            $redirect_url = $this->checkoutmodale == 'yes' ? $modal_url : $transaction->generateToken()->url;
-            // TODO: implement checkout dialog
             return [
                 'result'   => 'success',
-                'redirect' => $redirect_url
+                'redirect' => $this->getRedirectUrl($transaction)
             ];
         } catch (\Exception $e) {
             $this->displayErrors($e);
@@ -342,6 +339,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
     /**
      * Update order status
+     *
+     * @param $order order
+     * @param $transaction_status FedaPay transaction status
      */
     private function updateOrderStatus($order, $transaction_status = null)
     {
@@ -364,6 +364,29 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         }
     }
 
+    /**
+     * Return the redirect uri according to settings
+     *
+     * @param $transaction FedaPay transaction object
+     *
+     * @return string
+     */
+    private function getRedirectUrl($transaction)
+    {
+        if (
+            $this->checkoutmodale === 'yes' &&
+            (
+                ($this->testmode === 'yes' && $this->fedapay_testpublickey) ||
+                ($this->testmode !== 'yes' && $this->fedapay_livepublickey)
+            )
+        ) {
+            $redirect_url = sprintf( '#fedapay-confirm-%s:%s', $transaction->id, rawurlencode( $transaction->callback_url ) );
+        } else {
+            $redirect_url = $transaction->generateToken()->url;
+        }
+
+        return $redirect_url;
+    }
 
     /**
      * Generate Image HTML.
