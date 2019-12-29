@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WooCommerce FedaPay Gateway plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce FedaPay Gateway 0.1.7\n"
+"Project-Id-Version: WooCommerce FedaPay Gateway 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-gateway-fedapay\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-12-29T13:04:10+00:00\n"
+"POT-Creation-Date: 2019-12-29T13:34:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: woo-gateway-fedapay\n"
@@ -170,11 +170,11 @@ msgstr ""
 msgid "%s only supports XOF as currency for now. Please select XOF currrency or contact the store manager."
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:270
+#: includes/class-wc-fedapay-gateway.php:267
 msgid "<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href=\"%s\">forcing the checkout pages to be secured.</a>"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:332
+#: includes/class-wc-fedapay-gateway.php:329
 msgid "Payment error: "
 msgstr ""
 
@@ -202,20 +202,20 @@ msgstr ""
 msgid "Transaction failed: Try again!"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:429
+#: includes/class-wc-fedapay-gateway.php:452
 msgid "Select an image to upload"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:430
+#: includes/class-wc-fedapay-gateway.php:453
 msgid "Use this image"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:431
-#: includes/class-wc-fedapay-gateway.php:434
+#: includes/class-wc-fedapay-gateway.php:454
+#: includes/class-wc-fedapay-gateway.php:457
 msgid "Add image"
 msgstr ""
 
-#: includes/class-wc-fedapay-gateway.php:442
+#: includes/class-wc-fedapay-gateway.php:465
 msgid "Remove image"
 msgstr ""
 
