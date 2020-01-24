@@ -4,7 +4,7 @@ Tags: credit card, fedapay, mtn mobile money, woocommerce
 Requires at least: 4.5
 Tested up to: 5.2.2
 Requires PHP: 5.6
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,6 +75,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 5. Choose payment mode.
 
 == Changelog ==
+
+= 0.2.3 2020-01-24 =
+* Fix - Test with WC 3.9.0
 
 = 0.2.2 2019-12-28 =
 * Fix - Fix FedaPay labels
