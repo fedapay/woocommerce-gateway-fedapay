@@ -225,7 +225,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $token = md5(uniqid());
         $hash = md5($order_id . $amount . $order->currency . $token);
 
-        $callback_url = home_url('/') . 'wc-api/' . get_class($this) . '/?order_id=' . $order_id . '&token=' . $token;
+        $callback_url = home_url('/') . 'wc-api/' . get_class($this) . '/?wcfpg_order_id=' . $order_id . '&wcfpg_token=' . $token;
         $order_number = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 4);
         $order_number = strtoupper($order_number);
 
@@ -280,16 +280,16 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $transaction_id = 0;
         $token = null;
 
-        if (isset($_GET['order_id'])) {
-            $order_id = $_GET['order_id'];
+        if (isset($_GET['wcfpg_order_id'])) {
+            $order_id = $_GET['wcfpg_order_id'];
         }
 
         if (isset($_GET['id'])) {
             $transaction_id = $_GET['id'];
         }
 
-        if (isset($_GET['token'])) {
-            $token = $_GET['token'];
+        if (isset($_GET['wcfpg_token'])) {
+            $token = $_GET['wcfpg_token'];
         }
 
         $order = wc_get_order($order_id);
