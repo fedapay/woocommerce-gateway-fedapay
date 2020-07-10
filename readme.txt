@@ -76,6 +76,11 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.2.4 2020-07-10 =
+* Fix - Test with WC up to 4.3.0
+* Fix - Test with WordPress up to 5.4.2
+* Fix - Prefix callback URL queries to avoid conflicts
+
 = 0.2.3 2020-01-24 =
 * Fix - Test with WC 3.9.0
 
