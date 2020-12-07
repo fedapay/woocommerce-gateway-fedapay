@@ -107,7 +107,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
      */
     public function payment_scripts()
     {
-        $public_key = $this->testmode == 'yes' ? $this->fedapay_testpublickey : $this->fedapay_livepublickey;
+        $public_key = $this->is_true($this->testmode) ? $this->fedapay_testpublickey : $this->fedapay_livepublickey;
 
         $fedapay_params = array(
             'public_key'    => $public_key,
@@ -213,11 +213,8 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
      */
     public function process_payment($order_id)
     {
-        global $woocommerce;
-
         $order      = wc_get_order($order_id);
         $amount     = (int) $order->get_total();
-        $phone      = $order->billing_phone;
         $firstname  = $order->billing_first_name;
         $lastname   = $order->billing_last_name;
         $email      = $order->billing_email;
@@ -374,10 +371,10 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     private function getRedirectUrl($transaction)
     {
         if (
-            $this->checkoutmodale === 'yes' &&
+            $this->is_true($this->checkoutmodale) &&
             (
-                ($this->testmode === 'yes' && $this->fedapay_testpublickey) ||
-                ($this->testmode !== 'yes' && $this->fedapay_livepublickey)
+                ($this->is_true($this->testmode) && $this->fedapay_testpublickey) ||
+                (!$this->is_true($this->testmode) && $this->fedapay_livepublickey)
             )
         ) {
             $redirect_url = sprintf( '#fedapay-confirm-%s:%s', $transaction->id, rawurlencode( $transaction->callback_url ) );
@@ -475,5 +472,10 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         <?php
 
         return ob_get_clean();
+    }
+
+    private function is_true($value)
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 }
