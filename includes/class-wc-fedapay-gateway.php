@@ -223,8 +223,12 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $hash = md5($order_id . $amount . $order->currency . $token);
 
         $callback_url = home_url('/') . 'wc-api/' . get_class($this) . '/?wcfpg_order_id=' . $order_id . '&wcfpg_token=' . $token;
-        $order_number = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 0, 4);
-        $order_number = strtoupper($order_number);
+        $description = 'Commande ' . $order->id;
+
+        foreach ( $order->get_items() as $item ) {
+            $description .= ', Article: ' . $item->get_name();
+            break; // Use juste first item name
+        }
 
         if ($order->currency !== 'XOF') {
             wc_add_notice( sprintf( __( "%s only supports XOF as currency for now. Please select XOF currrency or contact the store manager.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
@@ -232,7 +236,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
 
         try {
             $transaction = \FedaPay\Transaction::create(array(
-                'description' => 'Article '. $order_number,
+                'description' => $description,
                 'amount' => $amount,
                 'currency' => array( 'iso' => $order->currency ),
                 'callback_url' => $callback_url,
