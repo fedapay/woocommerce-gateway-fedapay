@@ -78,7 +78,7 @@ If you get stuck, you can ask for help in the Plugin Forum.
 == Changelog ==
 
 = 0.3.0 2021-07-23 =
-* Fix for support recent WordPress and WooCommerce versions
+* Fix to support recent WordPress and WooCommerce versions
 
 = 0.2.9 2020-12-15 =
 * Fix - Include article id and first production name in the translation description
