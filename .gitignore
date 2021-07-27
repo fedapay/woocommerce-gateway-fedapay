@@ -1,5 +1,5 @@
 .DS_Store
-phpcs.xml
+phpcs.xmll
 phpunit.xml
 Thumbs.db
 wp-cli.local.yml
