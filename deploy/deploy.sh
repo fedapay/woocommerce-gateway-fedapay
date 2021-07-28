@@ -14,8 +14,8 @@ rm -rf wordpress_org_assets/ deploy/
 rsync -r -p ./* $SVN_DIR/trunk/
 
 # 5. Create SVN tag
-mkdir -p $SVN_DIR/tags/$TRAVIS_TAG
-rsync -r -p ./* $SVN_DIR/tags/$TRAVIS_TAG
+mkdir -p $SVN_DIR/tags/$DRONE_TAG
+rsync -r -p ./* $SVN_DIR/tags/$DRONE_TAG
 
 svn stat $SVN_DIR
 
@@ -27,7 +27,7 @@ svn stat $SVN_DIR | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 svn stat $SVN_DIR
 
 # 8. Push SVN tag
-svn ci  --message "Release $TRAVIS_TAG" \
+svn ci  --message "Release $DRONE_TAG" \
         --username $SVN_USERNAME \
         --password $SVN_PASSWORD \
         --non-interactive $SVN_DIR

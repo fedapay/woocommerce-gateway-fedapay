@@ -1,0 +1,18 @@
+kind: pipeline
+name: default
+
+- name: Deploy plugin to WordPress
+  environment:
+    SVN_REPOSITORY:
+      from_secret: SVN_REPOSITORY
+    SVN_USERNAME:
+      from_secret: SVN_USERNAME
+    SVN_PASSWORD:
+      from_secret: SVN_PASSWORD
+  commands:
+  - bash ./deploy/deploy.sh
+  when:
+    event: tag
+    branch:
+    - master
+

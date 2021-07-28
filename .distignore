@@ -5,6 +5,7 @@
 .gitignore
 .gitlab-ci.yml
 .travis.yml
+.drone.yml
 .DS_Store
 Thumbs.db
 behat.yml
