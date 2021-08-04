@@ -3,7 +3,7 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce FedaPay Gateway 0.1.1\n"
+"Project-Id-Version: FedaPay Gateway for WooCommerce 0.1.1\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
 "POT-Creation-Date: 2019-12-29 15:09+0100\n"
 "PO-Revision-Date: \n"
@@ -117,19 +117,19 @@ msgid "Remove image"
 msgstr "Supprimer l’image"
 
 #: includes/class-wc-fedapay-plugin.php:76
-msgid "WooCommerce FedaPay Gateway requires WooCommerce to be activated"
-msgstr "WooCommerce FedaPay Gateway requiert l’activation de WooCommerce"
+msgid "FedaPay Gateway for WooCommerce requires WooCommerce to be activated"
+msgstr "FedaPay Gateway for WooCommerce requiert l’activation de WooCommerce"
 
 #: includes/class-wc-fedapay-plugin.php:80
-msgid "WooCommerce FedaPay Gateway requires WooCommerce version 2.5 or greater"
+msgid "FedaPay Gateway for WooCommerce requires WooCommerce version 2.5 or greater"
 msgstr ""
-"WooCommerce FedaPay Gateway requiert la version 2.5 ou supérieur de "
+"FedaPay Gateway for WooCommerce requiert la version 2.5 ou supérieur de "
 "WooCommerce"
 
 #: includes/class-wc-fedapay-plugin.php:84
 msgid ""
-"WooCommerce FedaPay Gateway requires cURL to be installed on your server"
-msgstr "WooCommerce FedaPay Gateway requiert que cURL soit installé"
+"FedaPay Gateway for WooCommerce requires cURL to be installed on your server"
+msgstr "FedaPay Gateway for WooCommerce requiert que cURL soit installé"
 
 #: includes/class-wc-fedapay-plugin.php:230
 msgid "Settings"

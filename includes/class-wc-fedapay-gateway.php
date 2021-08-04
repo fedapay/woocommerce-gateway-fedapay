@@ -281,17 +281,11 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $transaction_id = 0;
         $token = null;
 
-        if (isset($_GET['wcfpg_order_id'])) {
-            $order_id = $_GET['wcfpg_order_id'];
-        }
+        
+        $order_id = (int) filter_input(INPUT_GET, 'wcfpg_order_id', FILTER_SANITIZE_NUMBER_INT);
+        $transaction_id = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        $token = (string) filter_input(INPUT_GET, 'wcfpg_token', FILTER_SANITIZE_STRING );
 
-        if (isset($_GET['id'])) {
-            $transaction_id = $_GET['id'];
-        }
-
-        if (isset($_GET['wcfpg_token'])) {
-            $token = $_GET['wcfpg_token'];
-        }
 
         $order = wc_get_order($order_id);
         $order_transaction = $this->getOrderTransaction($order_id, $transaction_id);
@@ -441,7 +435,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
                         echo wp_get_attachment_image( $value, 'thumbnail' );
                     } else {
                     ?>
-                        <img src="<?php echo $value  ?>" />
+                        <img src="<?php echo esc_url($value); ?>" />
                     <?php
                     }
                     ?>

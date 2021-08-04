@@ -73,15 +73,15 @@ class WC_Fedapay_Plugin
     protected function _check_dependencies()
     {
         if (! class_exists('WooCommerce')) {
-            throw new Exception(__('WooCommerce FedaPay Gateway requires WooCommerce to be activated', 'woo-gateway-fedapay'));
+            throw new Exception(__('FedaPay Gateway for WooCommerce requires WooCommerce to be activated', 'woo-gateway-fedapay'));
         }
 
         if (version_compare(WooCommerce::instance()->version, '2.5', '<')) {
-            throw new Exception(__('WooCommerce FedaPay Gateway requires WooCommerce version 2.5 or greater', 'woo-gateway-fedapay'));
+            throw new Exception(__('FedaPay Gateway for WooCommerce requires WooCommerce version 2.5 or greater', 'woo-gateway-fedapay'));
         }
 
         if (! function_exists('curl_init')) {
-            throw new Exception(__('WooCommerce FedaPay Gateway requires cURL to be installed on your server', 'woo-gateway-fedapay'));
+            throw new Exception(__('FedaPay Gateway for WooCommerce requires cURL to be installed on your server', 'woo-gateway-fedapay'));
         }
     }
 

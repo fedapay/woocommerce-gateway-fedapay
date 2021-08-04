@@ -1,6 +1,6 @@
-=== WooCommerce FedaPay Gateway ===
+=== FedaPay Gateway for WooCommerce ===
 Contributors: fedapay
-Tags: credit card, fedapay, mtn mobile money, woocommerce
+Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
