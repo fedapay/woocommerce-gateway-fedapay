@@ -215,9 +215,9 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         $order      = wc_get_order($order_id);
         $amount     = (int) $order->get_total();
-        $firstname  = $order->billing_first_name;
-        $lastname   = $order->billing_last_name;
-        $email      = $order->billing_email;
+        $firstname  = sanitize_text_field($order->billing_first_name);
+        $lastname   = sanitize_text_field($order->billing_last_name);
+        $email      = sanitize_email($order->billing_email);
 
         $token = md5(uniqid());
         $hash = md5($order_id . $amount . $order->currency . $token);
