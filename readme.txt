@@ -1,6 +1,6 @@
-=== WooCommerce FedaPay Gateway ===
+=== FedaPay Gateway for WooCommerce ===
 Contributors: fedapay
-Tags: credit card, fedapay, mtn mobile money, woocommerce
+Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
@@ -12,7 +12,7 @@ Take credit card and mobile money payments on your store using FedaPay.
 
 == Description ==
 
-Accept Visa, MasterCard, MTN Mobile Money directly on your store with the FedaPay payment gateway for WooCommerce.
+Accept Visa, MasterCard, Mobile Money directly on your store with the FedaPay payment gateway for WooCommerce.
 
 = Take Credit card and Mobile Money payments easily and directly on your store =
 
