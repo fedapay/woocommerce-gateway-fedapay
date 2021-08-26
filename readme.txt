@@ -77,6 +77,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.3.1 2021-08-26 =
+* Fix to support recent WordPress and WooCommerce versions
+
 = 0.3.0 2021-07-23 =
 * Fix to support recent WordPress and WooCommerce versions
 
