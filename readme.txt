@@ -4,7 +4,7 @@ Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 0.3.0
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,8 +77,11 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.3.2 2021-08-26 =
+* Bump version 0.3.2
+
 = 0.3.1 2021-08-26 =
-* Fix to support recent WordPress and WooCommerce versions
+* Security fix
 
 = 0.3.0 2021-07-23 =
 * Fix to support recent WordPress and WooCommerce versions
