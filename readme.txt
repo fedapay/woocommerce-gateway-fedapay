@@ -77,6 +77,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.3.3 2021-08-26 =
+* Update icones
+
 = 0.3.2 2021-08-26 =
 * Bump version 0.3.2
 
