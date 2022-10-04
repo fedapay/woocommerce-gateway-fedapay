@@ -24,7 +24,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $this->method_description = __('FedaPay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
 
         $this->supports = ['products'];
-        $this->currencies = ['XOF', 'GNF'];
+        $this->currencies = ['XOF', 'GNF', 'EUR'];
 
         // Method for loading fedapay-php-lib
         $this->get_fedapay_sdk();

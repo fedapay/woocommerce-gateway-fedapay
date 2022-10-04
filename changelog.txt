@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+= 0.3.4 2021-08-26 =
+* Enable GNF and EUR currencies
+
 = 0.3.3 2021-08-26 =
 * Update icones
 
