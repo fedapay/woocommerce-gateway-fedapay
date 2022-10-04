@@ -24,6 +24,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $this->method_description = __('FedaPay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
 
         $this->supports = ['products'];
+        $this->currencies = ['XOF', 'GNF'];
 
         // Method for loading fedapay-php-lib
         $this->get_fedapay_sdk();
@@ -145,6 +146,16 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     }
 
     /**
+     * Verify if provided currency is supported by FedaPay
+     * @param string $currency
+     * @return bool
+     */
+    private function isValideCurrency($currency)
+    {
+        return in_array($currency, $this->currencies);
+    }
+
+    /**
      * Initialise Gateway Settings Form Fields.
      */
     public function init_form_fields()
@@ -160,7 +171,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
     {
         $currency = get_woocommerce_currency();
 
-        if ($currency != 'XOF') {
+        if (!$this->isValideCurrency($currency)) {
             echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> does not support the currency you are currently using. Please set the currency of your shop on XOF (FCFA) <a href="%s">here.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=general')),"</p></div>";
         }
     }
@@ -230,7 +241,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
             break; // Use juste first item name
         }
 
-        if ($order->currency !== 'XOF') {
+        if (!$this->isValideCurrency($order->currency)) {
             wc_add_notice( sprintf( __( "%s only supports XOF as currency for now. Please select XOF currrency or contact the store manager.", 'woo-gateway-fedapay' ), $this->method_title ), 'error' );
         }
 
@@ -281,7 +292,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $transaction_id = 0;
         $token = null;
 
-        
+
         $order_id = (int) filter_input(INPUT_GET, 'wcfpg_order_id', FILTER_SANITIZE_NUMBER_INT);
         $transaction_id = (int) filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         $token = (string) filter_input(INPUT_GET, 'wcfpg_token', FILTER_SANITIZE_STRING );
