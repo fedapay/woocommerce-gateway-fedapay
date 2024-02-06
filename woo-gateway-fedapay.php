@@ -6,14 +6,14 @@
  * Author: Fedapay
  * Author URI: https://fedapay.com/
  * Requires at least: 4.4
- * Tested up to: 5.8
+ * Tested up to: 6.4.3
  * WC requires at least: 2.6
- * WC tested up to: 5.5.2
+ * WC tested up to: 8.5.2
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: woo-gateway-fedapay
  * Domain Path: /languages
- * Version: 0.3.4
+ * Version: 0.3.5
  *
  */
 
@@ -21,7 +21,7 @@ if (! defined('ABSPATH') ) {
     exit;
 }
 
-define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.3.4' );
+define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.3.5' );
 
 function wc_fedapay_gateway() {
     static $plugin;

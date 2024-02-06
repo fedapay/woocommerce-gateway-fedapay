@@ -2,9 +2,9 @@
 Contributors: fedapay
 Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
-Tested up to: 5.8
+Tested up to: 6.4.3
 Requires PHP: 5.6
-Stable tag: 0.3.4
+Stable tag: 0.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ If you get stuck, you can ask for help in the Plugin Forum.
 5. Choose payment mode.
 
 == Changelog ==
+
+= 0.3.5 2024-02-06 =
+* Fix - Tested up to: 6.4.3
+* Fix - WC tested up to: 8.5.2
 
 = 0.3.4 2021-08-26 =
 * Enable GNF and EUR currencies
