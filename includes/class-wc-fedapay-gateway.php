@@ -21,7 +21,7 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         $this->has_fields = false;
         $this->method_title = __('FedaPay', 'woo-gateway-fedapay');
         $this->order_button_text = __('Continue to payment', 'woo-gateway-fedapay');
-        $this->method_description = __('FedaPay Payment Gateway Plug-in for WooCommerce', 'woo-gateway-fedapay');
+        $this->method_description = __('Pay via FedaPay; you can pay with your credit card or Mobile Money', 'woo-gateway-fedapay');
 
         $this->supports = ['products'];
         $this->currencies = ['XOF', 'GNF', 'EUR'];
@@ -269,13 +269,18 @@ class WC_Fedapay_Gateway extends WC_Payment_Gateway
         }
     }
 
+    public function is_available()
+    {
+        return $this->enabled == 'yes';
+    }
+
     /**
      *  Check if we are forcing SSL on checkout page
      */
     public function do_ssl_check()
     {
-        if ($this->enabled == "yes") {
-            if (get_option('woocommerce_force_ssl_checkout') == "no") {
+        if ($this->enabled == 'yes') {
+            if (get_option('woocommerce_force_ssl_checkout') == 'no') {
                 echo "<div class=\"error\"><p>". sprintf(__('<strong>%s</strong> is enabled and WooCommerce is not forcing the SSL certificate on your checkout page. Please ensure that you have a valid SSL certificate and that you are <a href="%s">forcing the checkout pages to be secured.</a>', 'woo-gateway-fedapay'), $this->method_title, admin_url('admin.php?page=wc-settings&tab=advanced')) ."</p></div>";
             }
         }

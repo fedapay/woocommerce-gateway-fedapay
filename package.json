@@ -1,0 +1,26 @@
+{
+  "name": "woo-gateway-fedapay",
+  "version": "1.0.0",
+  "description": "Take credit card and mobile money payments on your store using Fedapay.",
+  "main": "client/index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fedapay/woocommerce-gateway-fedapay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fedapay/woocommerce-gateway-fedapay/issues"
+  },
+  "homepage": "https://github.com/fedapay/woocommerce-gateway-fedapay#readme",
+  "devDependencies": {
+    "@woocommerce/dependency-extraction-webpack-plugin": "^3.0.1",
+    "@wordpress/scripts": "^30.7.0"
+  },
+  "dependencies": {}
+}

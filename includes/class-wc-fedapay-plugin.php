@@ -91,11 +91,61 @@ class WC_Fedapay_Plugin
     public function init()
     {
         // Bootstrap
-        add_action('plugins_loaded', array( $this, 'wc_fedapay_update_db_check' ));
-        add_action('plugins_loaded', array( $this, 'bootstrap' ));
+        add_action('plugins_loaded', array( $this, 'plugins_loaded' ));
         add_filter( 'plugin_action_links_' . plugin_basename( $this->file ), array( $this, 'plugin_action_links' ) );
 
         add_action('wp_ajax_wc_fedapay_gateway_dismiss_notice_message', array( $this, 'ajax_dismiss_notice' ));
+
+        add_action( 'woocommerce_blocks_loaded', array($this, 'fedapay_register_order_approval_payment_method_type') );
+    }
+
+    /**
+     * Return the dir path for the plugin.
+     *
+     * @return string
+     */
+    public function plugin_path() {
+        return WC_FEDAPAY_PLUGIN_FILE_PATH;
+    }
+
+    /**
+     * Init plugin on load
+     */
+    public function plugins_loaded()
+    {
+        $this->wc_fedapay_update_db_check();
+
+        // Declare plugin compatibility
+        add_action( 'before_woocommerce_init', function () {
+            try {
+                \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', $this->plugin_path() . 'woo-gateway-fedapay.php', true );
+            } catch ( \Exception $e ) {
+                //
+            }
+        } );
+
+        // Boostrap plugin
+        $this->bootstrap();
+    }
+
+    public function fedapay_register_order_approval_payment_method_type()
+    {
+        // Check if the required class exists
+        if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
+            return;
+        }
+
+        // Include the custom Blocks Checkout class
+        require_once $this->plugin_path() . 'includes/class-wc-fedapay-block-checkout.php';
+
+        // Hook the registration function to the 'woocommerce_blocks_payment_method_type_registration' action
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function( Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
+                // Register an instance of WC_Phonepe_Blocks
+                $payment_method_registry->register( new WC_Fedapay_Block_Checkout );
+            }
+        );
     }
 
     public function wc_fedapay_update_db_check()
