@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # 1. Clone complete SVN repository to separate directory
-SVN_DIR=../svn
-mkdir $SVN_DIR
+SVN_DIR="${HOME}/svn-woo-gateway-fedapay"
 echo $SVN_REPOSITORY
 echo "Clone svn directory"
 svn co $SVN_REPOSITORY $SVN_DIR
