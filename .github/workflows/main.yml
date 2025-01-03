@@ -2,8 +2,7 @@ name: Deploy FedaPay Woocommerce Plugin
 
 on:
   push:
-    tags:
-      - '*'
+    branches: [ master ]
 
 jobs:
   build:
@@ -17,4 +16,4 @@ jobs:
       with:
         svn-username: ${{ secrets.SVN_USERNAME }}
         svn-password: ${{ secrets.SVN_PASSWORD }}
-        plugin-repository: ${{ vars.SVN_REPOSITORY }}
+        plugin-repository: woo-gateway-fedapay
