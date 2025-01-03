@@ -21,13 +21,17 @@ The FedaPay plugin extends WooCommerce allowing you to take payments directly on
 FedaPay is available in:
 
 * Benin
-* Ivory Coast
 * Togo
+* Ivory Coast
 * Senegal
+* Mali
+* Niger
+* Burkina Faso
+* World wide with card payments
 
 = Why choose FedaPay? =
 
-FedaPay has no setup fees, no monthly fees, no hidden costs: you only get charged when you earn money! Earnings are transferred to your bank or mobile money account on a 7-day rolling basis.
+FedaPay has no setup fees, no monthly fees, no hidden costs: you only get charged when you earn money! Earnings are transferred to your bank or mobile money account on a 3-days rolling basis.
 
 == Installation ==
 
