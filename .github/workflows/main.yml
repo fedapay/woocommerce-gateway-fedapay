@@ -2,7 +2,8 @@ name: Deploy FedaPay Woocommerce Plugin
 
 on:
   push:
-    tags: "*"
+    tags:
+      - '*'
 env:
   SVN_REPOSITORY: ${{ vars.SVN_REPOSITORY }}
   SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
