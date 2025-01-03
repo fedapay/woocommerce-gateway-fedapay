@@ -13,6 +13,8 @@ rm -rf wordpress_org_assets/ deploy/
 # 4. Copy git repository contents to SNV trunk/ directory
 rsync -r -p ./* $SVN_DIR/trunk/
 
+echo $GITHUB_REF_NAME
+
 # 5. Create SVN tag
 mkdir -p $SVN_DIR/tags/$GITHUB_REF_NAME
 rsync -r -p ./* $SVN_DIR/tags/$GITHUB_REF_NAME

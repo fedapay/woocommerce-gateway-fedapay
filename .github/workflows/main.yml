@@ -2,8 +2,11 @@ name: Deploy FedaPay Woocommerce Plugin
 
 on:
   push:
-    tags:
-      - '*'
+    tags: "*"
+env:
+  SVN_REPOSITORY: ${{ vars.SVN_REPOSITORY }}
+  SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+  SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
 
 jobs:
   build:
@@ -11,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: WordPress Plugin Deploy
-      id: deploy
-      uses: richard-muvirimi/deploy-wordpress-plugin@development
-      with:
-        svn-username: ${{ secrets.SVN_USERNAME }}
-        svn-password: ${{ secrets.SVN_PASSWORD }}
-        plugin-repository: woo-gateway-fedapay
+    - name: Install SVN ( Subversion )
+      run: |
+        sudo apt-get update
+        sudo apt-get install subversion
+
+    - name: Deploy script
+      run: bash ./deploy/deploy.sh
