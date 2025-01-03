@@ -3,20 +3,26 @@
 # 1. Clone complete SVN repository to separate directory
 SVN_DIR=../svn
 mkdir $SVN_DIR
+echo $SVN_REPOSITORY
+echo "Clone svn directory"
 svn co $SVN_REPOSITORY $SVN_DIR
 
 # 2. Update SVN assets/ folder
+echo "Update SVN assets/ folder"
 rsync -r -p ./wordpress_org_assets/* $SVN_DIR/assets
 
 # 3. Clean up unnecessary files
+echo "Clean up unnecessary files"
 rm -rf wordpress_org_assets/ deploy/
 
 # 4. Copy git repository contents to SNV trunk/ directory
+echo "Copy git repository contents to SNV trunk/ directory"
 rsync -r -p ./* $SVN_DIR/trunk/
 
 echo $GITHUB_REF_NAME
 
 # 5. Create SVN tag
+echo "Create SVN tag"
 mkdir -p $SVN_DIR/tags/$GITHUB_REF_NAME
 rsync -r -p ./* $SVN_DIR/tags/$GITHUB_REF_NAME
 
