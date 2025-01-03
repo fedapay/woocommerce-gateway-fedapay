@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+= 0.3.6 2025-01-03 =
+* Update deployment script
+
 = 0.3.5 2024-02-06 =
 * Fix - Tested up to: 6.4.3
 * Fix - WC tested up to: 8.5.2
