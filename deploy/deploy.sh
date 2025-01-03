@@ -2,6 +2,7 @@
 
 # 1. Clone complete SVN repository to separate directory
 SVN_DIR=../svn
+mkdir $SVN_DIR
 svn co $SVN_REPOSITORY $SVN_DIR
 
 # 2. Update SVN assets/ folder
