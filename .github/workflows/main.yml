@@ -4,10 +4,6 @@ on:
   push:
     tags:
       - '*'
-env:
-  SVN_REPOSITORY: ${{ vars.SVN_REPOSITORY }}
-  SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-  SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
 
 jobs:
   build:
@@ -15,5 +11,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Deploy script
-      run: sh ./deploy/deploy.sh
+    - name: Build
+      run: |
+        npm install
+        npm run build
+
+    - name: WordPress Plugin Deploy
+      id: deploy
+      uses: richard-muvirimi/deploy-wordpress-plugin@development
+      with:
+        svn-username: ${{ secrets.SVN_USERNAME }}
+        svn-password: ${{ secrets.SVN_PASSWORD }}
+        plugin-repository: ${{ vars.SVN_REPOSITORY }}
