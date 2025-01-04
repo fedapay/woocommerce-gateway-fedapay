@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+= 0.3.8 2025-01-04 =
+* Fix class definition bug
+
 = 0.3.7 2025-01-03 =
 * Update deployment script
 
