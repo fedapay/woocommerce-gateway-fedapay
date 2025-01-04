@@ -117,10 +117,8 @@ class WC_Fedapay_Plugin
 
         // Declare plugin compatibility
         add_action( 'before_woocommerce_init', function () {
-            try {
+            if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
                 \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', $this->plugin_path() . 'woo-gateway-fedapay.php', true );
-            } catch ( \Exception $e ) {
-                //
             }
         } );
 
