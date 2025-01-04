@@ -21,7 +21,7 @@ if (! defined('ABSPATH') ) {
     exit;
 }
 
-define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.3.8' );
+define( 'WC_FEDAPAY_GATEWAY_VERSION', '0.3.9' );
 define( 'WC_FEDAPAY_PLUGIN_FILE_PATH', plugin_dir_path( __FILE__ ) );
 
 function wc_fedapay_gateway() {
