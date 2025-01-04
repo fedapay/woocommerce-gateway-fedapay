@@ -6,9 +6,9 @@
  * Author: Fedapay
  * Author URI: https://fedapay.com/
  * Requires at least: 4.4
- * Tested up to: 6.4.3
+ * Tested up to: 6.7.1
  * WC requires at least: 2.6
- * WC tested up to: 9.4
+ * WC tested up to: 9.5
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: woo-gateway-fedapay

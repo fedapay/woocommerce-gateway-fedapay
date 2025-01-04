@@ -2,7 +2,7 @@
 Contributors: fedapay
 Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
-Tested up to: 6.4.3
+Tested up to: 6.7.1
 Requires PHP: 5.6
 Stable tag: 0.3.9
 License: GPLv2 or later
