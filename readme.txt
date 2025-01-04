@@ -4,7 +4,7 @@ Tags: credit card, fedapay, mobile money, woocommerce
 Requires at least: 4.4
 Tested up to: 6.4.3
 Requires PHP: 5.6
-Stable tag: 0.3.8
+Stable tag: 0.3.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 5. Choose payment mode.
 
 == Changelog ==
+
+= 0.3.9 2025-01-04 =
+* Remove vendor folder from .distignored
 
 = 0.3.8 2025-01-04 =
 * Fix class definition bug
