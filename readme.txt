@@ -81,6 +81,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
+= 0.3.10 2025-01-04 =
+* Test up to 6.7.1 and WC 9.5
+
 = 0.3.9 2025-01-04 =
 * Remove vendor folder from .distignored
 
