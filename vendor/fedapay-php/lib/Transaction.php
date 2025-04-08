@@ -28,7 +28,7 @@ class Transaction extends Resource
     use ApiOperations\Save;
     use ApiOperations\Delete;
 
-    private static $availableMobileMoney = ['mtn', 'moov', 'mtn_ci'];
+    private static $availableMobileMoney = ['mtn_open', 'moov', 'mtn_ci'];
 
     protected function modeAvailable($mode)
     {
