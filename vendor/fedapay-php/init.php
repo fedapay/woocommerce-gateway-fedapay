@@ -21,6 +21,8 @@ require(dirname(__FILE__) . '/lib/Error/SignatureVerification.php');
 // API operations
 require(dirname(__FILE__) . '/lib/ApiOperations/All.php');
 require(dirname(__FILE__) . '/lib/ApiOperations/Create.php');
+require(dirname(__FILE__) . '/lib/ApiOperations/CreateInBatch.php');
+require(dirname(__FILE__) . '/lib/ApiOperations/Search.php');
 require(dirname(__FILE__) . '/lib/ApiOperations/Delete.php');
 require(dirname(__FILE__) . '/lib/ApiOperations/Request.php');
 require(dirname(__FILE__) . '/lib/ApiOperations/Retrieve.php');
@@ -36,12 +38,15 @@ require(dirname(__FILE__) . '/lib/Resource.php');
 require(dirname(__FILE__) . '/lib/Account.php');
 require(dirname(__FILE__) . '/lib/ApiKey.php');
 require(dirname(__FILE__) . '/lib/Currency.php');
+require(dirname(__FILE__) . '/lib/Balance.php');
 require(dirname(__FILE__) . '/lib/Customer.php');
 require(dirname(__FILE__) . '/lib/Event.php');
 require(dirname(__FILE__) . '/lib/Log.php');
 require(dirname(__FILE__) . '/lib/PhoneNumber.php');
 require(dirname(__FILE__) . '/lib/Transaction.php');
 require(dirname(__FILE__) . '/lib/Payout.php');
+require(dirname(__FILE__) . '/lib/Page.php');
+require(dirname(__FILE__) . '/lib/Invoice.php');
 
 // Webhooks
 require(dirname(__FILE__) . '/lib/Webhook.php');

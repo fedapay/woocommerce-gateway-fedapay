@@ -3,27 +3,27 @@
 namespace FedaPay\ApiOperations;
 
 /**
- * trait Create
+ * trait CreateInBatch
  */
-trait Create
+trait CreateInBatch
 {
     /**
-     * Static method to create a resources
+     * Create resources in batch
+     *
      * @param array $params
      * @param array $headers
-     *
-     * @return Resource
+     * @return FedaPay\FedaPayObject
      */
-    public static function create($params = [], $headers = [])
+    public static function createInBatch($params = [], $headers = [])
     {
-        self::_validateParams($params);
-        $path = static::classPath();
+        $path = static::resourcePath('batch');
         $className = static::className();
 
         list($response, $opts) = static::_staticRequest('post', $path, $params, $headers);
 
         $object = \FedaPay\Util\Util::arrayToFedaPayObject($response, $opts);
 
-        return $object->$className;
+        $data = "{$className}_batch";
+        return $object->$data;
     }
 }
