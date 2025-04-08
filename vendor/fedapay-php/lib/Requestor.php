@@ -13,6 +13,8 @@ class Requestor
 
     const PRODUCTION_BASE = 'https://api.fedapay.com';
 
+    const DEVELOPMENT_BASE = 'https://dev-api.fedapay.com';
+
     /**
     * Http Client
     * @var GuzzleHttp\ClientInterface
@@ -60,6 +62,7 @@ class Requestor
         $params = $params ?: [];
         $headers = $headers ?: [];
 
+        $params = array_merge($this->defaultParams(), $params);
         $headers = array_merge($this->defaultHeaders(), $headers);
         $url = $this->url($path);
         $rawHeaders = [];
@@ -94,6 +97,21 @@ class Requestor
             $httpRequest,
             $httpResponse
         );
+    }
+
+    /**
+     * Return the default request params
+     * @return array
+     */
+    protected function defaultParams()
+    {
+        $params = [];
+
+        if (FedaPay::getLocale()) {
+            $params['locale'] = FedaPay::getLocale();
+        }
+
+        return $params;
     }
 
     /**
@@ -135,6 +153,8 @@ class Requestor
 
         switch ($environment) {
             case 'development':
+            case 'dev':
+                return self::DEVELOPMENT_BASE;
             case 'sandbox':
             case 'test':
             case null:
